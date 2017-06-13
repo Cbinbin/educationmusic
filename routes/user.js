@@ -8,7 +8,23 @@ router.get('/', (req, res)=> {
   queryuser.include('teacher')
   queryuser.include('student')
   queryuser.get(userId).then((user)=> {
-    res.send({code: msg.postok[0], errMsg: msg.postok[1], data: user })
+    var userData = {
+      openId: user.get('openId'),
+      teacher: user.get('teacher') || null,
+      student: user.get('student') || null,
+      city: user.get('city'),
+      types: user.get('types') || null,
+      nickName: user.get('nickName'),
+      integral: user.get('integral'),
+      cards: user.get('cards'),
+      gender: user.get('gender'),
+      province: user.get('province'),
+      avatarUrl: user.get('avatarUrl'),
+      objectId: user.id,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    }
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: userData })
   })
 })
 

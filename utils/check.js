@@ -23,7 +23,7 @@ class check {
       var token = req.query.token
       jwt.verify(token, salt, (err, decoded) => {
         if (!err) { 
-          var queryuser = new AV.Query('User')
+          var queryuser = new AV.Query('Usermusic')
           queryuser.get(decoded.userId).then((user)=> {
             req.music = decoded
             next()

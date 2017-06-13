@@ -45,6 +45,29 @@ class arrx {
     return sum
   }
 
+  pruneOne(val, array) {
+    var array2 = array
+    for(var i = 0; i < array.length; i++) {
+      if(array[i] == val) {
+        array2.splice(i, 1)
+        i = array.length
+      }
+    }
+    return array2
+  }
+
+  insertOne(val, array) {
+    var array2 = array
+      , exist = false
+    for(var i = 0; i < array.length; i++) {
+      if(array[i] == val) {
+        exist = true
+      }
+    }
+    if(!exist) array2.splice(0, 0, val)
+    return array2
+  }
+
 }
 
 module.exports = arrx

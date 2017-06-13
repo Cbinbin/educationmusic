@@ -4,9 +4,9 @@ const router = require('express').Router()
 
 router.post('/', (req, res)=> {
   const userId = req.music.userId
-  var queryuser = new AV.Query('User')
+  var queryuser = new AV.Query('Usermusic')
   queryuser.get(userId).then((userinfo)=> {
-    var userPot = AV.Object.createWithoutData('User', userinfo.id)
+    var userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
     var newstudent = new AV.Object('Student')
     newstudent.set('userId', userPot)
     newstudent.set('img', req.body.img)
