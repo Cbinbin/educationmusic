@@ -15,7 +15,6 @@ router.get('/', (req, res)=> {
   const code = String(req.query.code)
     , iv = String(req.query.iv)
     , encryptedData = String(req.query.encryptedData)
-  console.log(code, iv, encryptedData)
   if (!code || !iv || !encryptedData) return res.send({code: msg.missQuery[0], errMsg: msg.missQuery[1], data: {} })
   request.get(`${wxApis.session}?appid=${xcxId}&secret=${xcxSecret}&js_code=${code}&grant_type=authorization_code`)
   .end((err, result)=> {

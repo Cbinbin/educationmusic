@@ -4,6 +4,8 @@
   * [查看登录用户信息](#查看登录用户信息)
   * [新建教师信息](#新建教师信息)
   * [更改教师信息](#更改教师信息)
+  * [上传二维码](#上传二维码)
+  * [更改证书](#更改证书)
 
 * [教育后台](#教育后台)
 
@@ -56,6 +58,25 @@
   addlabel: ${addlabel},    //添加1个标签(String)
   rdulabel: ${rdulabel}    //删减1个标签(String)
   // 上传头像 key: 'music/imgs'
+}
+```
+### 上传二维码
+```js
+  POST    http://localhost:?/music/teacher/change/rqcode?token=${token}
+```
+```js
+{
+  // 上传二维码图片 key: 'music/rqcodes',覆盖原有
+}
+```
+### 更改证书
+```js
+  POST    http://localhost:?/music/teacher/change/cert?token=${token}
+```
+```js
+{
+  rducertUrl: ${rducertUrl}    //删减1个证书(String)
+  // 上传头像 key: 'music/certs'
 }
 ```
 

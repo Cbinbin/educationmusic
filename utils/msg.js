@@ -6,7 +6,7 @@ module.exports = {
   wxlogin: [429, 'wechat login error!'],
   checkraw: [430, `You have't permission`],
   checktoken: [431, 'Invalid token'],
-  other: [432, 'Other'],
+  typeExist: [432, 'You are already a teacher or a student'],
   other: [433, 'Other'],
   other: [434, 'Other'],
   checkuserId: [440, 'Not found this userId'],
