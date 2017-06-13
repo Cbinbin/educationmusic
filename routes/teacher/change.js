@@ -96,7 +96,7 @@ router.post('/cert', (req, res)=> {
 })
 
 router.post('/video', (req, res)=> {
-  const userId = req.music.userId
+  const userId = '593f5193128fe1006afb78a0'//req.music.userId
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('teacher')
   queryuser.get(userId).then((userinfo)=> {

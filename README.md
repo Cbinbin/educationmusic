@@ -2,6 +2,7 @@
 * [小程式登录](#小程式登录)
   * [授权登录](#授权登录)
   * [查看登录用户信息](#查看登录用户信息)
+  * [上传头像](#上传头像)
   * [新建教师信息](#新建教师信息)
   * [更改教师信息](#更改教师信息)
   * [上传二维码](#上传二维码)
@@ -28,6 +29,14 @@
 ```js
   GET    http://localhost:?/music/user?token=${token}
 ```
+
+### 上传头像
+```js
+  POST    http://localhost:?/music/uploadimg?token=${token}
+```
+```js
+// 上传头像 key: 'music/imgs'
+```
 ### 新建教师信息
 ```js
   POST    http://localhost:?/music/teacher/new?token=${token}
@@ -39,8 +48,8 @@
   realName: ${realName},    //真实姓名(String)
   gender: ${gender},    //性别(Number)
   introduction: ${introduction},    //自我介绍(String)
-  labels: ${labels}    //标签(Array)
-  // 上传头像 key: 'music/imgs'
+  labels: ${labels},    //标签(Array)
+  img: ${img}
 }
 ```
 ### 更改教师信息

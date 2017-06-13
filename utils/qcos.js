@@ -16,7 +16,7 @@ function upload(req, res, single) {
   var upload = multer({ storage: multer.diskStorage({}) }).single(single)
   var fileUrl = new Promise((resolve, reject)=> {
     upload(req, res, (err)=> {
-      if(err) return reject(err)
+      if(err) return reject(JSON.stringify(err))
       if(req.file) {
         var rs = fs.createReadStream(req.file.path)
           , md5Hash = crypto.createHash('md5')
@@ -32,7 +32,7 @@ function upload(req, res, single) {
             ContentLength: req.file.size
           }
           qcloud.putObject(params, (err, data)=> {
-            if(err) return reject(err)
+            if(err) return reject(JSON.stringify(err))
             var url = geturl(qcBucket, qcAppId, params.Key)
             data.ETag = data.ETag.replace(/\"/g, "")
             if(reTag === data.ETag) resolve(url)
@@ -61,7 +61,7 @@ function uploadFile(filePath, size, single) {
         ContentLength: size
       }
       qcloud.putObject(params, (err, data)=> {
-        if(err) return reject(err)
+        if(err) return reject(JSON.stringify(err))
         var url = geturl(qcBucket, qcAppId, params.Key)
         data.ETag = data.ETag.replace(/\"/g, "")
         if(reTag === data.ETag) resolve(url)
@@ -81,7 +81,7 @@ function deleteKey(fileUrl) {
       Key: key
     }
     qcloud.deleteObject(params, (err, data)=> {
-      if(err) return reject(err)
+      if(err) return reject(JSON.stringify(err))
       //data.DeleteObjectSuccess//
       resolve(data)
     })
