@@ -9,6 +9,7 @@
   * [更改证书](#更改证书)
 
 * [教育后台](#教育后台)
+  * [管理登录](#管理登录)
 
 
 
@@ -91,3 +92,14 @@
 
 
 ## 教育后台
+
+### 管理登录
+```js
+  POST    http://localhost:?/login
+```
+```js
+{
+  adminName: ${adminName},
+  passWord: ${passWord}
+}
+```

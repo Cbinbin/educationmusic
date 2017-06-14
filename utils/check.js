@@ -40,7 +40,7 @@ class check {
       var token = req.query.token
       jwt.verify(token, adsalt, (err, decoded) => {
         if (!err) { 
-          req.musicadmin = decoded
+          req.musicadmin = decoded.objParam
           next()
         } else res.send({code: msg.checktoken[0], errMsg: msg.checktoken[1], data: {} })
       })

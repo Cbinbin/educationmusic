@@ -1,5 +1,6 @@
 const router = require('express').Router()
   , AV = require('leanengine')
+  , ffmpeg = require('fluent-ffmpeg')
   , msg = require('../../utils/msg')
   , qcos = require('../../utils/qcos')
   , arrx = require('../../utils/arrx')
@@ -122,5 +123,15 @@ router.post('/video', (req, res)=> {
     })
   })
 })
+
+// router.get('/sss', (req, res)=> {
+//   ffmpeg('public/20170613.mp4')
+//   .screenshots({
+//     timestamps: ['50%'],
+//     filename: 'one.png',
+//     folder: 'public/screenshots',
+//     size: '320x240'
+//   })
+// })
 
 module.exports = router
