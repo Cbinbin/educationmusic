@@ -8,6 +8,8 @@
   * [上传二维码](#上传二维码)
   * [更改证书](#更改证书)
   * [更改视频](#更改视频)
+  * [积分交易](#积分交易)
+  * [查看交易凭证](#查看交易凭证)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -104,7 +106,19 @@
   // 上传头像 key: 'music/videos'
 }
 ```
-
+### 积分交易
+```js
+  POST    http://localhost:?/music/trade/one?token=${token}
+```
+```js
+{
+  goodsId: ${goodsId}    //物品ID
+}
+```
+### 查看交易凭证
+```js
+  GET    http://localhost:?/music/trade/vouchers?token=${token}
+```
 
 ## 教育后台
 
