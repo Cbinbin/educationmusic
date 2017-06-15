@@ -1,6 +1,5 @@
 const router = require('express').Router()
   , AV = require('leanengine')
-  , ffmpeg = require('fluent-ffmpeg')
   , msg = require('../../utils/msg')
   , qcos = require('../../utils/qcos')
   , arrx = require('../../utils/arrx')
@@ -97,7 +96,7 @@ router.post('/cert', (req, res)=> {
 })
 
 router.post('/video', (req, res)=> {
-  const userId = '593f5193128fe1006afb78a0'//req.music.userId
+  const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('teacher')
   queryuser.get(userId).then((userinfo)=> {
@@ -123,15 +122,5 @@ router.post('/video', (req, res)=> {
     })
   })
 })
-
-// router.get('/sss', (req, res)=> {
-//   ffmpeg('public/20170613.mp4')
-//   .screenshots({
-//     timestamps: ['50%'],
-//     filename: 'one.png',
-//     folder: 'public/screenshots',
-//     size: '320x240'
-//   })
-// })
 
 module.exports = router

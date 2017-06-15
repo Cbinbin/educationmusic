@@ -7,7 +7,7 @@ const student = require('./student/index')
 const user = require('./user')
 const uploadimg = require('./uploadimg')
 
-checkto.token(router)
+// checkto.token(router)
 
 router.use('/teacher', teacher)
 router.use('/student', student)

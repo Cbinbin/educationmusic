@@ -2,10 +2,10 @@ const router = require('express').Router()
   , check = require('../utils/check')
   , checkto = new check
 
-// const a = require('./a')
+const goods = require('./goods/index')
 
-// checkto.adminToken(router)
+checkto.adminToken(router)
 
-// router.use('/', a)
+router.use('/goods', goods)
 
 module.exports = router

@@ -7,9 +7,14 @@
   * [更改教师信息](#更改教师信息)
   * [上传二维码](#上传二维码)
   * [更改证书](#更改证书)
+  * [更改视频](#更改视频)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
+  * [新增物品](#新增物品)
+  * [获取商城物品列表](#获取商城物品列表)
+  * [获取单个商品详情](#获取单个商品详情)
+  * [修改单个商品详情](#修改单个商品详情)
 
 
 
@@ -89,6 +94,16 @@
   // 上传头像 key: 'music/certs'
 }
 ```
+### 更改视频
+```js
+  POST    http://localhost:?/music/teacher/change/video?token=${token}
+```
+```js
+{
+  rduvideoUrl: ${rduvideoUrl}    //删减1个视频(String)
+  // 上传头像 key: 'music/videos'
+}
+```
 
 
 ## 教育后台
@@ -103,3 +118,52 @@
   passWord: ${passWord}
 }
 ```
+
+### 新增物品
+#### 上传图片
+```js
+  POST    http://localhost:?/admin/goods/create/images?token=${token}
+```
+```js
+// key: 'adminmusic/images'
+```
+#### 清空图片
+```js
+  GET    http://localhost:?/admin/goods/create/images/empty?token=${token}
+```
+#### 添加物品
+```js
+  POST    http://localhost:?/admin/goods/create?token=${token}
+```
+```js
+{
+  title: ${title},    //标题(String)
+  point: ${point},    //积分(Number)
+  text: ${text},    //商品详情(String)
+  defaultState: ${defaultState}    //默认上下架['true'上架，'false'下架](Boolean)
+}
+```
+### 获取商城物品列表
+```js
+  GET    http://localhost:?/admin/goods/list?token=${token}
+```
+### 获取单个商品详情
+```js
+  GET    http://localhost:?/admin/goods/list/one?goodsid=${goodsid}&token=${token}
+```
+### 修改单个商品详情
+```js
+  POST    http://localhost:?/admin/goods/change/one?token=${token}
+```
+```js
+{
+  goodsId: ${goodsId},    //(String)
+  title: ${title},    //(String)
+  point: ${point},    //(Number)
+  text: ${text},    //(String)
+  state: ${state},    //(Boolean)
+  //delgoods: ${delgoods}    //删除(Boolean),和 goodsId 一起
+}
+```
+
+
