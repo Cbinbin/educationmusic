@@ -19,6 +19,7 @@
   * [获取单个知识天地](#获取单个知识天地)
   * [自己发布的知识天地列表](#自己发布的知识天地列表)
   * [自己发布评论](#自己发布评论)
+  * [打卡开工](#打卡开工)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -179,6 +180,10 @@
   retext: ${retext},    //评论内容(String)
   commentId: ${commentId}    //评论ID(String)    此ID为评论中的objectId, 可选
 }
+```
+### 打卡开工
+```js
+  GET    http://localhost:?/music/signed?token=${token}
 ```
 
 

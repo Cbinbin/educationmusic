@@ -11,7 +11,9 @@ module.exports = {
   integralNE: [434, 'Integral is not enough'],
   goodsOff: [435, 'This goods is now off the shelves'],
   noText: [436, 'Text cannot be empty'],
-  other: [437, 'Other'],
+  alreadySigned: [437, `You've already signed in`],
+  other: [438, 'Other'],
+  other: [439, 'Other'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],
   serverErr: [500, 'Server error']
