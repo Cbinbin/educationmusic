@@ -10,6 +10,10 @@
   * [更改视频](#更改视频)
   * [积分交易](#积分交易)
   * [查看交易凭证](#查看交易凭证)
+  * [查看目前积分](#查看目前积分)
+  * [查看积分清单](#查看积分清单)
+  * [获取物品列表](#获取物品列表)
+  * [获取单个物品详情](#获取单个物品详情)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -119,6 +123,30 @@
 ```js
   GET    http://localhost:?/music/trade/vouchers?token=${token}
 ```
+### 查看目前积分
+```js
+  GET    http://localhost:?/music/user/integral?token=${token}
+```
+### 查看积分清单
+```js
+  GET    http://localhost:?/music/user/integral/situation?token=${token}
+```
+### 获取物品列表
+```js
+  GET    http://localhost:?/music/goods/all?token=${token}&state=${state}&per=${per}&page=${page}
+  // state: 'sell' 获取全部在售
+```
+### 获取单个物品详情
+```js
+  GET    http://localhost:?/music/goods/one?goodsid=${goodsid}&token=${token}
+```
+
+
+
+
+
+
+
 
 ## 教育后台
 
@@ -159,7 +187,8 @@
 ```
 ### 获取商城物品列表
 ```js
-  GET    http://localhost:?/admin/goods/list?token=${token}
+  GET    http://localhost:?/admin/goods/list?token=${token}&state=${state}&per=${per}&page=${page}
+  // state: 'sell' 获取全部在售
 ```
 ### 获取单个商品详情
 ```js

@@ -28,4 +28,23 @@ router.get('/', (req, res)=> {
   })
 })
 
+router.get('/integral', (req, res)=> {
+  const userId = req.music.userId
+  var queryuser = new AV.Query('Usermusic')
+  queryuser.get(userId).then((user)=> {
+    var integral = user.get('integral') || 0
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: {objectId: user.id, integral: integral} })
+  })
+})
+
+router.get('/integral/situation', (req, res)=> {
+  const userId = req.music.userId
+  var querycinteg = new AV.Query('Cintegral')
+  querycinteg.equalTo('userId', userId)
+  querycinteg.descending('createdAt')
+  querycinteg.find().then((cintegs)=> {
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: cintegs })
+  })
+})
+
 module.exports = router
