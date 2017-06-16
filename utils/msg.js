@@ -10,7 +10,7 @@ module.exports = {
   passErr: [433, 'Password error'],
   integralNE: [434, 'Integral is not enough'],
   goodsOff: [435, 'This goods is now off the shelves'],
-  other: [436, 'Other'],
+  noText: [436, 'Text cannot be empty'],
   other: [437, 'Other'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],

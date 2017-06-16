@@ -14,6 +14,11 @@
   * [查看积分清单](#查看积分清单)
   * [获取物品列表](#获取物品列表)
   * [获取单个物品详情](#获取单个物品详情)
+  * [发布一条知识天地](#发布一条知识天地)
+  * [获取所有知识天地列表](#获取所有知识天地列表)
+  * [获取单个知识天地](#获取单个知识天地)
+  * [自己发布的知识天地列表](#自己发布的知识天地列表)
+  * [自己发布评论](#自己发布评论)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -21,6 +26,8 @@
   * [获取商城物品列表](#获取商城物品列表)
   * [获取单个商品详情](#获取单个商品详情)
   * [修改单个商品详情](#修改单个商品详情)
+  * [获取所有知识天地](#获取所有知识天地)
+  * [删除单个知识天地](#删除单个知识天地)
 
 
 
@@ -140,6 +147,39 @@
 ```js
   GET    http://localhost:?/music/goods/one?goodsid=${goodsid}&token=${token}
 ```
+### 发布一条知识天地
+```js
+  POST    http://localhost:?/music/knowledge/new?token=${token}
+```
+```js
+{
+  text: ${text}
+}
+```
+### 获取所有知识天地列表
+```js
+  GET    http://localhost:?/music/knowledge/whole?token=${token}
+```
+### 获取单个知识天地
+```js
+  GET    http://localhost:?/music/knowledge/single?kledgeid=${kledgeid}&token=${token}
+```
+### 自己发布的知识天地列表
+```js
+  GET    http://localhost:?/music/knowledge/own?token=${token}
+```
+
+### 自己发布评论
+```js
+  POST    http://localhost:?/music/knowledge/comment?token=${token}
+```
+```js
+{
+  kledgeId: ${kledgeId},    //知识天地ID(String)
+  retext: ${retext},    //评论内容(String)
+  commentId: ${commentId}    //评论ID(String)    此ID为评论中的objectId, 可选
+}
+```
 
 
 
@@ -208,5 +248,11 @@
   //delgoods: ${delgoods}    //删除(Boolean),和 goodsId 一起
 }
 ```
+
+### 获取所有知识天地
+
+
+### 删除单个知识天地
+
 
 
