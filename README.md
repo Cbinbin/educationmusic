@@ -12,6 +12,7 @@
     * [更改证书](#更改证书)
     * [更改视频](#更改视频)
     * [自己发布的知识天地列表](#自己发布的知识天地列表)
+    * [自己收到的评论](#自己收到的评论)
   * [积分商城](#积分商城)
     * [积分交易](#积分交易)
     * [查看交易凭证](#查看交易凭证)
@@ -135,6 +136,10 @@
 ### 自己发布的知识天地列表
 ```js
   GET    http://localhost:?/music/knowledge/own?token=${token}
+```
+### 自己收到的评论
+```js
+  GET    http://localhost:?/music/knowledge/own/comment?token=${token}
 ```
 
 

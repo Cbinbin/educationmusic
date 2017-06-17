@@ -29,14 +29,16 @@ router.post('/', (req, res)=> {
         querycomment.include('own.student')
         querycomment.get(commentId).then((othercomment)=> {
           var other = othercomment.get('own')
+            , commentPot = AV.Object.createWithoutData('Comment', othercomment.id)
+            , otherPot = AV.Object.createWithoutData('Usermusic', other.id)
             , otherTypes = other.get('types')
             , otherName = otherTypes == 'teacher' ? other.get('teacher').get('realName') : 
                          (otherTypes == 'student' ? other.get('student').get('realName') : '')
           newcomment.set('own', userPot)
           newcomment.set('ownName', userName)
           newcomment.set('knowledge', knowledgePot)
-          newcomment.set('commentId', othercomment.id)
-          newcomment.set('otherId', other.id)
+          newcomment.set('comment', commentPot)
+          newcomment.set('other', otherPot)
           newcomment.set('otherName', otherName)
           newcomment.set('retext', String(retext))
           newcomment.save().then((comment)=> {

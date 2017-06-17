@@ -3,6 +3,7 @@ const router = require('express').Router()
   , moment = require('moment')
   , msg = require('../../utils/msg')
   , changeComment = require('./functions/changeComment')
+  , aboutComment = require('./functions/aboutComment')
 
 router.get('/', (req, res)=> {
   const userId = req.music.userId
@@ -36,6 +37,40 @@ router.get('/', (req, res)=> {
       })
     })
     res.send({code: msg.getok[0], errMsg: msg.getok[1], data: knowledges })
+  })
+})
+
+router.get('/comment', (req, res)=> {
+  const userId = req.music.userId
+  aboutComment(userId).then((allcomment)=> {
+    var allcomments = []
+    allcomment.forEach((commentone)=> {
+      var own = commentone.get('own')
+        , knowledge = commentone.get('knowledge')
+        , comment = commentone.get('comment') ? commentone.get('comment') : null
+      allcomments.push({
+        knowledge: {
+          knowledgeId: knowledge.id,
+          text: knowledge.get('text')
+        },
+        own: {
+          userId: own.id,
+          types: own.get('types') || null,
+          avatarUrl: own.get('avatarUrl') || null
+        },
+        ownName: commentone.get('ownName'),
+        retext: commentone.get('retext'),
+        other: commentone.get('other') || null,
+        otherName: commentone.get('otherName') || null,
+        comment: comment == null ? comment : {
+          commentId: comment.id || null,
+          retext: comment.get('retext') || null
+        },
+        objectId: commentone.id,
+        createdAt: moment(commentone.createdAt).fromNow()
+      })
+    })
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: allcomments })
   })
 })
 
