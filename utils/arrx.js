@@ -56,6 +56,17 @@ class arrx {
     return array2
   }
 
+  pruneOnePot(val, array) {
+    var array2 = array
+    for(var i = 0; i < array.length; i++) {
+      if(array[i].id == val.id) {
+        array2.splice(i, 1)
+        i = array.length
+      }
+    }
+    return array2
+  }
+
   insertOne(val, array) {
     var array2 = array
       , exist = false

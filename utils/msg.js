@@ -12,7 +12,7 @@ module.exports = {
   goodsOff: [435, 'This goods is now off the shelves'],
   noText: [436, 'Text cannot be empty'],
   alreadySigned: [437, `You've already signed in`],
-  other: [438, 'Other'],
+  notYours: [438, `It's not yours`],
   other: [439, 'Other'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],

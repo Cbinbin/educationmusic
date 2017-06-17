@@ -2,6 +2,8 @@ const router = require('express').Router()
   , AV = require('leanengine')
   , moment = require('moment')
   , msg = require('../../utils/msg')
+  , arrx = require('../../utils/arrx')
+  , arr = new arrx
 
 router.post('/', (req, res)=> {
   const userId = req.music.userId
@@ -67,6 +69,40 @@ router.post('/', (req, res)=> {
     }, (err)=> {
       res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'kledgeId' })
     })
+  })
+})
+
+router.post('/delone', (req, res)=> {
+  const userId = req.music.userId
+    ,  commentId = req.body.commentId
+  var querycomment = new AV.Query('Comment')
+  querycomment.include('knowledge')
+  querycomment.get(commentId).then((comment)=> {
+    var own = comment.get('own')
+      , knowledge = comment.get('knowledge')
+      , comments = knowledge.get('comments')
+    if(own.id !== userId) return res.send({code: msg.notYours[0], errMsg: msg.notYours[1], data: 'commentId' })
+    var delcomment = AV.Object.createWithoutData('Comment', comment.id)
+      , updateknowledge = AV.Object.createWithoutData('Knowledge', knowledge.id)
+      , queryothercomment = new AV.Query('Comment')
+    queryothercomment.equalTo('comment', delcomment)
+    queryothercomment.find().then((othercomments)=> {
+      othercomments.forEach((commentone)=> {
+        var delothercomment = AV.Object.createWithoutData('Comment', commentone.id)
+        comments = arr.pruneOnePot(delothercomment, comments)
+        updateknowledge.set('comments', comments)
+        updateknowledge.save()
+        delothercomment.destroy()
+      })
+    })
+    comments = arr.pruneOnePot(delcomment, comments)
+    updateknowledge.set('comments', comments)
+    updateknowledge.save()
+    delcomment.destroy().then(()=> {
+      res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'deleted success' })
+    })
+  }, (err)=> {
+    res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'commentId' })
   })
 })
 
