@@ -24,7 +24,7 @@
     * [发布一条知识天地](#发布一条知识天地)
     * [获取所有知识天地列表](#获取所有知识天地列表)
     * [获取单个知识天地](#获取单个知识天地)
-    * [删除单个知识天地](#删除单个知识天地)
+    * [删除自己单个知识天地](#删除自己单个知识天地)
     * [自己发布评论](#自己发布评论)
     * [删除已发布评论](#删除已发布评论)
 
@@ -198,7 +198,7 @@
 ```js
   GET    http://localhost:?/music/knowledge/single?kledgeid=${kledgeid}&token=${token}
 ```
-### 删除单个知识天地
+### 删除自己单个知识天地
 ```js
   POST    http://localhost:?/music/knowledge/delone?token=${token}
 ```
@@ -303,9 +303,17 @@
 
 ## 管理知识天地
 ### 获取所有知识天地
-
-
+```js
+  GET    http://localhost:?/admin/knowledge/list?token=${token}
+```
 ### 删除单个知识天地
-
+```js
+  POST    http://localhost:?/admin/knowledge/del?token=${token}
+```
+```js
+{
+  kledgeId: ${kledgeId}
+}
+```
 
 
