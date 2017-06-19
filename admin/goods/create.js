@@ -59,6 +59,8 @@ router.get('/images/empty', (req, res)=> {
 router.post('/', (req, res)=> {
   const adminId = req.musicadmin.id
     , defaultState = req.body.defaultState === true ? true : false
+    , category = req.body.category
+  if(category != 'goods' && category != 'modle') return res.send({code: msg.formatIncorr[0], errMsg: msg.formatIncorr[1], data: `category只能是'goods'或'modle'` })
   var queryimage = new AV.Query('Image')
   queryimage.equalTo('adminId', adminId)
   queryimage.find().then((images)=> {
@@ -75,7 +77,16 @@ router.post('/', (req, res)=> {
     goods.set('point', Number(req.body.point))
     goods.set('text', String(req.body.text))
     goods.set('states', state)
+    goods.set('category', String(category))
     goods.save().then((newgoods)=> {
+      if(category == 'modle') {
+        var newmodle = new AV.Object('Modle')
+        newmodle.set('background', imagesor[0].url)
+        newmodle.save().then((modle)=> {
+          newgoods.set('modleId', modle.id)
+          newgoods.save()
+        })
+      }
       if(images[0]) {
         var delimage = AV.Object.createWithoutData('Image', images[0].id)
         delimage.destroy()

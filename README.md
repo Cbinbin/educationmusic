@@ -250,9 +250,7 @@
   content: ${content},    //主要信息(String)
   isFree: ${isFree},    //免费(Boolean)
   isOpen: ${isOpen},    //公开(Boolean)
-  modle: ${modle},    //模版，可选(String)
-  // lat: ${lat},    //(Number)
-  // lng: ${lng}    //(Number)
+  modle: ${modle}    //模版，可选(String)
 }
 ```
 ### 获取所有沙龙列表
@@ -310,7 +308,8 @@
   title: ${title},    //标题(String)
   point: ${point},    //积分(Number)
   text: ${text},    //商品详情(String)
-  defaultState: ${defaultState}    //默认上下架['true'上架，'false'下架](Boolean)
+  defaultState: ${defaultState},    //默认上下架['true'上架，'false'下架](Boolean)
+  category: ${category}    //商品类型['goods'物品，'modle'模版]
 }
 ```
 ### 获取商城物品列表

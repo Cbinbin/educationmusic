@@ -14,7 +14,7 @@ module.exports = {
   alreadySigned: [437, `You've already signed in`],
   notYours: [438, `It's not yours`],
   noPermiss: [439, 'No permissions to create the new one'],
-  other: [441, 'Other'],
+  formatIncorr: [441, 'The format is incorrect'],
   other: [442, 'Other'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],
