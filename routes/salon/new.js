@@ -30,8 +30,7 @@ router.post('/', (req, res)=> {
     newsolon.set('isFree', isFree)
     newsolon.set('isOpen', isOpen)
     newsolon.set('modle', modle)
-    if(req.body.lat) newsolon.set('lat', Number(req.body.lat))
-    if(req.body.lng) newsolon.set('lng', Number(req.body.lng))
+    if(req.body.phone) newsolon.set('phone', Number(req.body.phone))
     newsolon.set('startTime', new Date(`${date} ${time}`))
     newsolon.save().then((solon)=> {
       if(isFree && isOpen) {

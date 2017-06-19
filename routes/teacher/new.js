@@ -9,7 +9,7 @@ router.post('/', (req, res)=> {
   queryuser.get(userId).then((userinfo)=> {
     var typeExist = userinfo.get('types') || null
       , avatarUrl = userinfo.get('avatarUrl')
-    if(typeExist && typeExist != 'null') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
+    if(typeExist && typeExist != 'null' && typeExist != 'undefined') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
     var userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
       , labels = req.body.labels === undefined ? [] : req.body.labels
     var newteacher = new AV.Object('Teacher')
@@ -34,8 +34,6 @@ router.post('/', (req, res)=> {
       userinfo.save()
       res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
     })
-  }, (err)=> {
-    res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: err })
   })
 })
 

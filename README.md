@@ -5,7 +5,9 @@
     * [查看登录用户信息](#查看登录用户信息)
     * [上传头像](#上传头像)
     * [新建教师信息](#新建教师信息)
+    * [新建学生信息](#新建学生信息)
     * [打卡开工](#打卡开工)
+    * [删除身份](#删除身份)
   * [我的](#我的)
     * [更改教师信息](#更改教师信息)
     * [上传二维码](#上传二维码)
@@ -32,6 +34,7 @@
     * [获取所有沙龙列表](#获取所有沙龙列表)
     * [获取单个沙龙](#获取单个沙龙)
     * [获取自己发布的沙龙](#获取自己发布的沙龙)
+    * [获取已有的沙龙模版](#获取已有的沙龙模版)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -86,9 +89,31 @@
   img: ${img}
 }
 ```
+### 新建学生信息
+```js
+  POST    http://localhost:?/music/student/new?token=${token}
+```
+```js
+{
+  realName: ${realName},    //真实姓名(String)
+  gender: ${gender},    //性别(Number)
+  age: ${age},    //年龄(Number)
+  labels: ${labels},    //标签(Array)
+  img: ${img}
+}
+```
 ### 打卡开工
 ```js
   GET    http://localhost:?/music/signed?token=${token}
+```
+### 删除身份
+```js
+  POST    http://localhost:?/music/relieve?token=${token}
+```
+```js
+{
+  relieve: ${relieve}    //身份(String)['teacher'教师, 'student'学生]
+}
 ```
 
 
@@ -250,7 +275,8 @@
   content: ${content},    //主要信息(String)
   isFree: ${isFree},    //免费(Boolean)
   isOpen: ${isOpen},    //公开(Boolean)
-  modle: ${modle}    //模版，可选(String)
+  modle: ${modle},    //模版，可选(String)
+  phone: ${phone}    //(Number)
 }
 ```
 ### 获取所有沙龙列表
@@ -264,6 +290,11 @@
 ### 获取自己发布的沙龙
 ```js
   GET    http://localhost:?/music/salon/own?token=${token}
+```
+
+### 获取已有的沙龙模版
+```js
+  GET    http://localhost:?/music/salon/modle?token=${token}
 ```
 
 

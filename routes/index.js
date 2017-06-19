@@ -11,6 +11,7 @@ const uploadimg = require('./uploadimg')
 const trade = require('./trade')
 const goods = require('./goods')
 const signed = require('./signed')
+const relieve = require('./relieve')
 
 checkto.token(router)
 
@@ -23,5 +24,6 @@ router.use('/uploadimg', uploadimg)
 router.use('/trade', trade)
 router.use('/goods', goods)
 router.use('/signed', signed)
+router.use('/relieve', relieve)
 
 module.exports = router

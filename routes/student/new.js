@@ -6,14 +6,19 @@ router.post('/', (req, res)=> {
   const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')
   queryuser.get(userId).then((userinfo)=> {
-    var userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
+    var typeExist = userinfo.get('types') || null
+      , avatarUrl = userinfo.get('avatarUrl')
+      , userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
+      , labels = req.body.labels === undefined ? [] : req.body.labels
+    if(typeExist && typeExist != 'null' && typeExist != 'undefined') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
     var newstudent = new AV.Object('Student')
+    if(req.body.img) newstudent.set('img', req.body.img)
+      else newstudent.set('img', avatarUrl)
     newstudent.set('userId', userPot)
-    newstudent.set('img', req.body.img)
     newstudent.set('realName', req.body.realName)
     newstudent.set('gender', Number(req.body.gender))
-    newstudent.set('introduction', req.body.introduction)
-    newstudent.set('labels', req.body.labels)
+    newstudent.set('labels', labels)
+    newstudent.set('age', Number(req.body.age))
     newstudent.set('tasks', [])
     newstudent.set('myTeacher', [])
     newstudent.save().then((iamstudent)=> {
@@ -23,8 +28,6 @@ router.post('/', (req, res)=> {
       userinfo.save()
       res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamstudent })
     })
-  }, (err)=> {
-    res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: err })
   })
 })
 
