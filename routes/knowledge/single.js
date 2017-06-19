@@ -30,7 +30,7 @@ router.get('/', (req, res)=> {
       objectId: oneledge.id,
       createdAt: moment(oneledge.createdAt).fromNow()
     }
-    res.send({code: msg.postok[0], errMsg: msg.postok[1], data: knowledge })
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: knowledge })
   }, (err)=> {
     res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'kledgeid' })
   })

@@ -27,6 +27,11 @@
     * [删除自己单个知识天地](#删除自己单个知识天地)
     * [自己发布评论](#自己发布评论)
     * [删除已发布评论](#删除已发布评论)
+  * [音乐沙龙](#音乐沙龙)
+    * [发布一条沙龙](#发布一条沙龙)
+    * [获取所有沙龙列表](#获取所有沙龙列表)
+    * [获取单个沙龙](#获取单个沙龙)
+    * [获取自己发布的沙龙](#获取自己发布的沙龙)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -229,6 +234,39 @@
 }
 ```
 
+
+
+## 音乐沙龙
+### 发布一条沙龙
+```js
+  POST    http://localhost:?/music/salon/new?token=${token}
+```
+```js
+{
+  title: ${title},    //主题(String)
+  date: ${date},    //日期(String)
+  time: ${time},    //时间(String)
+  address: ${address},    //举办地点(String)
+  content: ${content},    //主要信息(String)
+  isFree: ${isFree},    //免费(Boolean)
+  isOpen: ${isOpen},    //公开(Boolean)
+  modle: ${modle},    //模版，可选(String)
+  // lat: ${lat},    //(Number)
+  // lng: ${lng}    //(Number)
+}
+```
+### 获取所有沙龙列表
+```js
+  GET    http://localhost:?/music/salon/all?token=${token}
+```
+### 获取单个沙龙
+```js
+  GET    http://localhost:?/music/salon/one?salonid=${salonid}&token=${token}
+```
+### 获取自己发布的沙龙
+```js
+  GET    http://localhost:?/music/salon/own?token=${token}
+```
 
 
 

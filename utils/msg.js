@@ -13,7 +13,9 @@ module.exports = {
   noText: [436, 'Text cannot be empty'],
   alreadySigned: [437, `You've already signed in`],
   notYours: [438, `It's not yours`],
-  other: [439, 'Other'],
+  noPermiss: [439, 'No permissions to create the new one'],
+  other: [441, 'Other'],
+  other: [442, 'Other'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],
   serverErr: [500, 'Server error']
