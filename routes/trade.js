@@ -1,7 +1,9 @@
 const router = require('express').Router()
   , AV = require('leanengine')
   , msg = require('../utils/msg')
+  , arrx = require('../utils/arrx')
   , integralChange = require('../funcs/integralChange')
+  , arr = new arrx
 
 router.post('/one', (req, res)=> {
   const userId = req.music.userId
@@ -14,8 +16,21 @@ router.post('/one', (req, res)=> {
         , point = goods.get('point') || 0
         , states = goods.get('states')
         , title = goods.get('title') || 'undefined'
+        , category = goods.get('category')
       if(states != '上架') return res.send({code: msg.goodsOff[0], errMsg: msg.goodsOff[1], data: '商品已下架' })
       else if(integral < point) return res.send({code: msg.integralNE[0], errMsg: msg.integralNE[1], data: '积分不足' })
+      if(category == 'modle') {
+        var modleId = goods.get('modleId')
+          , salonModles = user.get('salonModles') || []
+        if(arr.inToModleId(salonModles, modleId))
+          return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '请在过期后再购买' })
+        var modleData = {
+          modleId: modleId,
+          timestamp: Number(new Date().getTime() + (1*24*60*60*1000))
+        }
+        salonModles.push(modleData)
+        user.set('salonModles', salonModles)
+      }
       user.set('integral', Number(integral - point))
       user.save().then((updateuser)=> {
         integralChange(Number(0 - point), updateuser.id, `换购${title}`)

@@ -9,6 +9,18 @@ class arrx {
     return exist
   }
 
+  inToModleId(array, val) {  
+    var exist = false
+    for(var i = 0; i < array.length; i++) {
+      if(array[i].modleId == val && array[i].timestamp > new Date().getTime()) return exist = true
+      else if(array[i].modleId == val && array[i].timestamp < new Date().getTime()) {
+        array.splice(i, 1)
+        return exist
+      }
+    }
+    return exist
+  }
+
   shuffle(array) {
     var arraynew = array
     for(var i = arraynew.length-1; i >= 0; i--) {

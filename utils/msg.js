@@ -16,6 +16,9 @@ module.exports = {
   noPermiss: [439, 'No permissions to create the new one'],
   formatIncorr: [441, 'The format is incorrect'],
   other: [442, 'Other'],
+  other: [443, 'Other'],
+  other: [445, 'Other'],
+  failed: [444, 'failed'],
   checkuserId: [440, 'Not found this userId'],
   nothing: [404, 'Not found'],
   serverErr: [500, 'Server error']
