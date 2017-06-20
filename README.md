@@ -84,6 +84,7 @@
   lng: ${lng},    //经度(Number)
   realName: ${realName},    //真实姓名(String)
   gender: ${gender},    //性别(Number)
+  instrument: ${instrument},    //擅长乐器(String)
   introduction: ${introduction},    //自我介绍(String)
   labels: ${labels},    //标签(Array)
   img: ${img}

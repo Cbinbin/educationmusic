@@ -42,7 +42,7 @@ function setinfo(info) {
         muser.set('province', info.province)
         muser.set('city', info.city)
         muser.set('integral', 0)
-        muser.set('cards', [])
+        muser.set('salonModles', [])
         muser.save().then((newuser)=> {
           var objData = {
             openId: newuser.get('openId'),
@@ -66,7 +66,7 @@ function setinfo(info) {
       muser.set('province', info.province)
       muser.set('city', info.city)
       muser.set('integral', 0)
-      muser.set('cards', [])
+      muser.set('salonModles', [])
       muser.save().then((newuser)=> {
         var objData = {
           openId: newuser.get('openId'),

@@ -31,6 +31,7 @@ router.post('/', (req, res)=> {
         } 
         if(req.body.realName) teacherone.set('realName', req.body.realName)
         if(req.body.gender) teacherone.set('gender', Number(req.body.gender))
+        if(req.body.instrument) teacherone.set('instrument', req.body.instrument)
         if(req.body.introduction) teacherone.set('introduction', req.body.introduction)
         if(req.body.show) teacherone.set('show', show)
         teacherone.save().then((iamteacher)=> {
