@@ -15,6 +15,10 @@
     * [更改视频](#更改视频)
     * [自己发布的知识天地列表](#自己发布的知识天地列表)
     * [自己收到的评论](#自己收到的评论)
+    * [我的老师](#我的老师)
+    * [推荐的老师](#推荐的老师)
+    * [搜索老师](#搜索老师)
+    * [单个老师详情](#单个老师详情)
   * [积分商城](#积分商城)
     * [积分交易](#积分交易)
     * [查看交易凭证](#查看交易凭证)
@@ -175,6 +179,38 @@
 ### 自己收到的评论
 ```js
   GET    http://localhost:?/music/knowledge/own/comment?token=${token}
+```
+### 我的老师
+```js
+  GET    http://localhost:?/music/student/myteacher?token=${token}
+```
+### 推荐的老师
+```js
+  GET    http://localhost:?/music/student/myteacher/recommend?token=${token}&lat=${lat}&lng=${lng}
+```
+```js
+{
+  lat: ${lat},    //纬度(Number)
+  lng: ${lng}    //经度(Number)
+}
+```
+### 搜索老师
+```js
+  POST    http://localhost:?/music/student/myteacher/recommend/search?token=${token}
+```
+```js
+{
+  search: ${search}    //搜索(String)
+}
+```
+### 单个老师详情
+```js
+  GET    http://localhost:?/music/student/myteacher/one/detail?token=${token}&teacherid=${teacherid}
+```
+```js
+{
+  teacherid: ${teacherid}    //获取老师列表时的objectId
+}
 ```
 
 

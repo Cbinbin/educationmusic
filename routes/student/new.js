@@ -11,6 +11,7 @@ router.post('/', (req, res)=> {
       , userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
       , labels = req.body.labels === undefined ? [] : req.body.labels
     if(typeExist && typeExist != 'null' && typeExist != 'undefined') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
+    else if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
     var newstudent = new AV.Object('Student')
     if(req.body.img) newstudent.set('img', req.body.img)
       else newstudent.set('img', avatarUrl)

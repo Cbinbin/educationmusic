@@ -18,6 +18,7 @@ router.post('/', (req, res)=> {
           , imgurl = studentone.get('img')
         if(req.body.addlabel) labels = arr.insertOne(req.body.addlabel, labels)
         if(req.body.rdulabel) labels = arr.pruneOne(req.body.rdulabel, labels)
+        if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
         studentone.set('labels', labels)
         if(imgUrl) {
           studentone.set('img', imgUrl)

@@ -9,9 +9,10 @@ router.post('/', (req, res)=> {
   queryuser.get(userId).then((userinfo)=> {
     var typeExist = userinfo.get('types') || null
       , avatarUrl = userinfo.get('avatarUrl')
-    if(typeExist && typeExist != 'null' && typeExist != 'undefined') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
-    var userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
+      , userPot = AV.Object.createWithoutData('Usermusic', userinfo.id)
       , labels = req.body.labels === undefined ? [] : req.body.labels
+    if(typeExist && typeExist != 'null' && typeExist != 'undefined') return res.send({code: msg.typeExist[0], errMsg: msg.typeExist[1], data: {} })
+    else if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
     var newteacher = new AV.Object('Teacher')
     newteacher.set('userId', userPot)
     newteacher.set('lat', Number(req.body.lat))
