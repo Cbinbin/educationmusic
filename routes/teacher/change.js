@@ -3,6 +3,7 @@ const router = require('express').Router()
   , msg = require('../../utils/msg')
   , qcos = require('../../utils/qcos')
   , arrx = require('../../utils/arrx')
+  , integralChange = require('../../funcs/integralChange')
   , arr = new arrx
 
 router.post('/', (req, res)=> {
@@ -57,7 +58,15 @@ router.post('/rqcode', (req, res)=> {
       var codeurl = teacherone.get('rqcode') || null
       qcos.upload(req, res, 'music/rqcodes').then((rqcodeUrl)=> {
         if(codeurl) qcos.deleteKey(codeurl).then()
-        if(rqcodeUrl) teacherone.set('rqcode', rqcodeUrl)
+        if(rqcodeUrl) {
+          teacherone.set('rqcode', rqcodeUrl)
+          if(!codeurl) {
+            var integral = userinfo.get('integral')
+            integralChange(10, userinfo.id, '信息完善-二维码')
+            userinfo.set('integral', (integral + 10))
+            userinfo.save()
+          }
+        }
         teacherone.save().then((iamteacher)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
         })
@@ -76,8 +85,9 @@ router.post('/cert', (req, res)=> {
     var teacherId = String(userinfo.get('teacher').id)
       , queryteacher = new AV.Query('Teacher')
     queryteacher.get(teacherId).then((teacherone)=> {
-      var certs = teacherone.get('certs')
+      var certs = teacherone.get('certs') || []
         , certlength = certs.length
+        , certjudge = teacherone.get('certjudge') || false
       qcos.upload(req, res, 'music/certs').then((certUrl)=> {
         var rducertUrl = req.body.rducertUrl
         arr.pruneOne(rducertUrl, certs)
@@ -85,6 +95,13 @@ router.post('/cert', (req, res)=> {
         if(certUrl) {
           certs = arr.insertOne(certUrl, certs)
           teacherone.set('certs', certs)
+          teacherone.set('certjudge', true)
+          if(!certjudge) {
+            var integral = userinfo.get('integral')
+            integralChange(10, userinfo.id, '信息完善-证书')
+            userinfo.set('integral', (integral + 10))
+            userinfo.save()
+          }
         }
         teacherone.save().then((iamteacher)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
@@ -106,6 +123,7 @@ router.post('/video', (req, res)=> {
     queryteacher.get(teacherId).then((teacherone)=> {
       var videos = teacherone.get('videos')
         , videolength = videos.length
+        , videojudge = teacherone.get('videojudge') || false
       qcos.upload(req, res, 'music/videos').then((videoUrl)=> {
         var rduvideoUrl = req.body.rduvideoUrl
         arr.pruneOne(rduvideoUrl, videos)
@@ -113,6 +131,13 @@ router.post('/video', (req, res)=> {
         if(videoUrl) {
           videos = arr.insertOne(videoUrl, videos)
           teacherone.set('videos', videos)
+          teacherone.set('videojudge', true)
+          if(!videojudge) {
+            var integral = userinfo.get('integral')
+            integralChange(10, userinfo.id, '信息完善-教学风采')
+            userinfo.set('integral', (integral + 10))
+            userinfo.save()
+          }
         }
         teacherone.save().then((iamteacher)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })

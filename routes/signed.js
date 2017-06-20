@@ -24,8 +24,8 @@ router.get('/', (req, res)=> {
           var updatesign = AV.Object.createWithoutData('Signed', signs[0].id)
           updatesign.set(`day${objdate.day}`, true)
           updatesign.save().then(()=> {
-            integralChange(10, user.id, '打卡开工')
-            user.set('integral', (integral + 10)).save()
+            integralChange(5, user.id, '打卡开工')
+            user.set('integral', (integral + 5)).save()
             res.send({code: msg.getok[0], errMsg: msg.getok[1], data: 'signed success' })
           })
         }
@@ -35,8 +35,8 @@ router.get('/', (req, res)=> {
         newsign.set('year_mon', `${objdate.year}_${objdate.month}`)
         newsign.set(`day${objdate.day}`, true)
         newsign.save().then(()=> {
-          integralChange(10, user.id, '打卡开工')
-          user.set('integral', (integral + 10)).save()
+          integralChange(5, user.id, '打卡开工')
+          user.set('integral', (integral + 5)).save()
           res.send({code: msg.getok[0], errMsg: msg.getok[1], data: 'signed success' })
         })
       }

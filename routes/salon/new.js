@@ -33,11 +33,11 @@ router.post('/', (req, res)=> {
     if(req.body.phone) newsolon.set('phone', Number(req.body.phone))
     newsolon.set('startTime', new Date(`${date} ${time}`))
     newsolon.save().then((solon)=> {
-      if(isFree && isOpen) {
-        integralChange(50, user.id, '音乐沙龙🎵')
-        user.set('integral', (integral + 50))
-        user.save()
-      }
+      var addNum = 10
+      if(isFree && isOpen) addNum += 10
+      integralChange(addNum, user.id, '音乐沙龙🎵')
+      user.set('integral', (integral + addNum))
+      user.save()
       res.send({code: msg.postok[0], errMsg: msg.postok[1], data: solon })
     })
   })

@@ -46,6 +46,8 @@
   * [管理知识天地](#管理知识天地)
     * [获取所有知识天地](#获取所有知识天地)
     * [删除单个知识天地](#删除单个知识天地)
+    * [单个置顶](#单个置顶)
+    * [单个取消置顶](#单个取消置顶)
 
 
 
@@ -378,6 +380,24 @@
 ### 删除单个知识天地
 ```js
   POST    http://localhost:?/admin/knowledge/del?token=${token}
+```
+```js
+{
+  kledgeId: ${kledgeId}
+}
+```
+### 单个置顶
+```js
+  POST    http://localhost:?/admin/knowledge/top?token=${token}
+```
+```js
+{
+  kledgeId: ${kledgeId}
+}
+```
+### 单个取消置顶
+```js
+  POST    http://localhost:?/admin/knowledge/qxtop?token=${token}
 ```
 ```js
 {
