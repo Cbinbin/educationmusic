@@ -114,61 +114,23 @@ router.post('/cert', (req, res)=> {
   })
 })
 
-router.post('/video', (req, res)=> {
-  const userId = req.music.userId
-  var queryvideo = new AV.Query('Videous')
-    , userPot = AV.Object.createWithoutData('Usermusic', userId)
-  queryvideo.equalTo('user', userPot)
-  qcos.upload(req, res, 'music/videos').then((videoUrl)=> {
-    queryvideo.find().then((videouss)=> {
-      if(videouss[0]) {
-        var existUrl = videouss[0].get('url')
-        videouss[0].set('url', videoUrl)
-        videouss[0].save().then((videoup)=> {
-          qcos.deleteKey(existUrl)
-          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: videoup })
-        })
-      } else {
-        var newvideous = new AV.Object('Videous')
-        newvideous.set('user', userPot)
-        newvideous.set('url', videoUrl)
-        newvideous.save().then((videous)=> {
-          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: videous })
-        })
-      }
-    }, (err)=> {
-      res.send({code: msg.failed[0], errMsg: err, data: 'Not found the Class "Videous"' })
-    })
-  })
-})
-
 router.post('/style', (req, res)=> {
   const userId = req.music.userId
-    , urlId = req.body.urlId || 'null'
-    , tags = req.body.tags === undefined ? [] : req.body.tags
   var queryuser = new AV.Query('Usermusic')
-    , queryvideo = new AV.Query('Videous')
-    , queryteacher = new AV.Query('Teacher')
   queryuser.include('teacher')
   queryuser.get(userId).then((userinfo)=> {
-    queryvideo.get(urlId).then((videous)=> {
-      var teacher = userinfo.get('teacher') || null
-        , teacherId = teacher != null ? teacher.id : 'null'
-        , url = videous.get('url')
-      queryteacher.get(teacherId).then((teacherone)=> {
-        var teacherPot = AV.Object.createWithoutData('Teacher', teacherone.id)
-          , videos = teacherone.get('videos') || []
-          , videojudge = teacherone.get('videojudge') || false
-        var newstyle = new AV.Object('Stylem')
-        newstyle.set('teacher', teacherPot)
-        newstyle.set('fileurl', url)
-        newstyle.set('title', String(req.body.title))
-        newstyle.set('tags', tags)
-        newstyle.save().then((styleone)=> {
-          var stylemPot = AV.Object.createWithoutData('Stylem', styleone.id)
-            , videousPot = AV.Object.createWithoutData('Videous', videous.id)
-          videousPot.destroy()
-          arr.insertOnePot(stylemPot, videos)
+    var teacherId = String(userinfo.get('teacher').id)
+      , queryteacher = new AV.Query('Teacher')
+    queryteacher.get(teacherId).then((teacherone)=> {
+      var videos = teacherone.get('videos')
+        , videolength = videos.length
+        , videojudge = teacherone.get('videojudge') || false
+      qcos.upload(req, res, 'music/videos').then((videoUrl)=> {
+        var rduvideoUrl = req.body.rduvideoUrl
+        arr.pruneOne(rduvideoUrl, videos)
+        if(videos.length != videolength) qcos.deleteKey(rduvideoUrl).then()
+        if(videoUrl) {
+          videos = arr.insertOne(videoUrl, videos)
           teacherone.set('videos', videos)
           teacherone.set('videojudge', true)
           if(!videojudge) {
@@ -177,15 +139,13 @@ router.post('/style', (req, res)=> {
             userinfo.set('integral', (integral + 10))
             userinfo.save()
           }
-          teacherone.save().then((iamteacher)=> {
-            res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
-          })
+        }
+        teacherone.save().then((iamteacher)=> {
+          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
         })
-      }, (err)=> {
-        res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: '你不是老师' })
       })
     }, (err)=> {
-      res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'urlId' })
+      res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'teacherId' })
     })
   })
 })

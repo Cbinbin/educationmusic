@@ -12,8 +12,7 @@
     * [更改教师信息](#更改教师信息)
     * [上传二维码](#上传二维码)
     * [更改证书](#更改证书)
-    * [上传视频](#上传视频)
-    * [增加教学风采](#增加教学风采)
+    * [更改教学风采](#更改教学风采)
     * [自己发布的知识天地列表](#自己发布的知识天地列表)
     * [自己收到的评论](#自己收到的评论)
     * [我的老师](#我的老师)
@@ -44,6 +43,9 @@
     * [老师布置作业](#老师布置作业)
     * [老师课时统计](#老师课时统计)
     * [学生接收作业](#学生接收作业)
+  * [学生视频](#学生视频)
+    * [上传视频](#上传视频)
+    * [增加字段](#增加字段)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -167,24 +169,14 @@
   // 上传头像 key: 'music/certs'
 }
 ```
-### 上传视频
-```js
-  POST    http://localhost:?/music/teacher/change/video?token=${token}
-```
-```js
-{
-  // 上传视频 key: 'music/videos'
-}
-```
-### 增加教学风采
+### 更改教学风采
 ```js
   POST    http://localhost:?/music/teacher/change/style?token=${token}
 ```
 ```js
 {
-  urlId: ${urlId},   //urlID(String)
-  title: ${title},   //视频标题(String)
-  tags: ${tags}   //视频标签(Array)
+  rduvideoUrl: ${rduvideoUrl}    //删减1个视频(String)
+  // 上传视频 key: 'music/videos'
 }
 ```
 
@@ -388,6 +380,28 @@
 ```
 
 
+
+## 学生视频
+### 上传视频
+```js
+  POST    http://localhost:?/music/teacher/video/one?token=${token}
+```
+```js
+{
+  // 上传视频 key: 'music/studentVideos'
+}
+```
+### 增加字段
+```js
+  POST    http://localhost:?/music/teacher/video/student?token=${token}
+```
+```js
+{
+  urlId: ${urlId},    //urlID(String)
+  title: ${title},    //视频标题(String)
+  tags: ${tags}    //视频标签(Array)
+}
+```
 
 
 
