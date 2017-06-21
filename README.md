@@ -46,6 +46,9 @@
   * [学生视频](#学生视频)
     * [上传视频](#上传视频)
     * [增加字段](#增加字段)
+    * [获取自己的视频](#获取自己的视频)
+    * [获取自己单个](#获取自己单个)
+    * [删除自己单个](#删除自己单个)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -402,6 +405,24 @@
   tags: ${tags}    //视频标签(Array)
 }
 ```
+### 获取自己的视频
+```js
+  GET    http://localhost:?/music/teacher/video/all?token=${token}
+```
+### 获取自己单个
+```js
+  GET    http://localhost:?/music/teacher/video/single?token=${token}&videoid=${videoid}
+```
+### 删除自己单个
+```js
+  POST    http://localhost:?/music/teacher/video/delone?token=${token}
+```
+```js
+{
+  videoId: ${videoId}
+}
+```
+
 
 
 

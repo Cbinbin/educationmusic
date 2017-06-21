@@ -119,7 +119,8 @@ router.post('/style', (req, res)=> {
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('teacher')
   queryuser.get(userId).then((userinfo)=> {
-    var teacherId = String(userinfo.get('teacher').id)
+    var teacher = userinfo.get('teacher') || null
+      , teacherId = teacher != null ? teacher.id : 'null'
       , queryteacher = new AV.Query('Teacher')
     queryteacher.get(teacherId).then((teacherone)=> {
       var videos = teacherone.get('videos')
