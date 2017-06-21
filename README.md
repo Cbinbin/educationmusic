@@ -173,7 +173,7 @@
 ```
 ```js
 {
-  // 上传头像 key: 'music/videos'
+  // 上传视频 key: 'music/videos'
 }
 ```
 ### 增加教学风采
