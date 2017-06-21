@@ -55,7 +55,7 @@ router.get('/all', (req, res)=> {
           classtime: assign.get('classtime') || null,
           gender: assign.get('gender') || 0,
           objectId: assign.id,
-          createdAt: assign.createdAt,
+          createdAt: assign.createdAt
         })
       })
       res.send({code: msg.getok[0], errMsg: msg.getok[1], data: {task: assignes, taskNum: assignes.length} })

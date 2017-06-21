@@ -43,6 +43,8 @@
     * [老师布置作业](#老师布置作业)
     * [老师课时统计](#老师课时统计)
     * [学生接收作业](#学生接收作业)
+    * [学生作业列表](#学生作业列表)
+    * [学生单个作业](#学生单个作业)
   * [学生视频](#学生视频)
     * [上传视频](#上传视频)
     * [增加字段](#增加字段)
@@ -380,6 +382,14 @@
 {
   taskId: ${taskId}    //作业ID
 }
+```
+### 学生作业列表
+```js
+  GET    http://localhost:?/music/student/task/all?token=${token}
+```
+### 学生单个作业
+```js
+  GET    http://localhost:?/music/student/task/single?token=${token}&taskid=${taskid}
 ```
 
 
