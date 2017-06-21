@@ -12,7 +12,8 @@
     * [更改教师信息](#更改教师信息)
     * [上传二维码](#上传二维码)
     * [更改证书](#更改证书)
-    * [更改视频](#更改视频)
+    * [上传视频](#上传视频)
+    * [增加教学风采](#增加教学风采)
     * [自己发布的知识天地列表](#自己发布的知识天地列表)
     * [自己收到的评论](#自己收到的评论)
     * [我的老师](#我的老师)
@@ -166,16 +167,27 @@
   // 上传头像 key: 'music/certs'
 }
 ```
-### 更改视频
+### 上传视频
 ```js
   POST    http://localhost:?/music/teacher/change/video?token=${token}
 ```
 ```js
 {
-  rduvideoUrl: ${rduvideoUrl}    //删减1个视频(String)
   // 上传头像 key: 'music/videos'
 }
 ```
+### 增加教学风采
+```js
+  POST    http://localhost:?/music/teacher/change/style?token=${token}
+```
+```js
+{
+  urlId: ${urlId},   //urlID(String)
+  title: ${title},   //视频标题(String)
+  tags: ${tags}   //视频标签(Array)
+}
+```
+
 ### 自己发布的知识天地列表
 ```js
   GET    http://localhost:?/music/knowledge/own?token=${token}

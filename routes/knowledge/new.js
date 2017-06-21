@@ -14,7 +14,7 @@ router.post('/', (req, res)=> {
   newknowledge.set('text', String(text))
   newknowledge.set('comments', [])
   newknowledge.save().then((newledge)=> {
-    var queryuser = AV.Query('Usermusic')
+    var queryuser = new AV.Query('Usermusic')
     queryuser.get(userId).then((user)=> {
       var integral = user.get('integral')
       integralChange(10, user.id, '知识天地')
