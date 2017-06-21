@@ -80,6 +80,7 @@ router.post('/top', (req, res)=> {
   const adminId = req.musicadmin.id
   const kledgeId = req.body.kledgeId
   var querytop = new AV.Query('Top')
+    , updatekledge = AV.Object.createWithoutData('Knowledge', kledgeId)
   querytop.equalTo('adminId', 'admin')
   querytop.find().then((tops)=> {
     if(tops[0]) {
@@ -90,6 +91,8 @@ router.post('/top', (req, res)=> {
       klgtop.push(kledgeId)
       tops[0].set('klgtop', klgtop)
       tops[0].save().then((topup)=> {
+        updatekledge.set('top', true)
+        updatekledge.save()
         res.send({code: msg.postok[0], errMsg: msg.postok[1], data: topup })
       })
     } else {
@@ -98,6 +101,8 @@ router.post('/top', (req, res)=> {
       newtop.set('klgtop', [kledgeId])
       newtop.set('klgNum', 3)
       newtop.save().then((topone)=> {
+        updatekledge.set('top', true)
+        updatekledge.save()
         res.send({code: msg.postok[0], errMsg: msg.postok[1], data: topone })
       })
     }
@@ -124,6 +129,9 @@ router.post('/qxtop', (req, res)=> {
       arr.pruneOne(kledgeId, klgtop)
       tops[0].set('klgtop', klgtop)
       tops[0].save().then((topup)=> {
+        var updatekledge = AV.Object.createWithoutData('Knowledge', kledgeId)
+        updatekledge.set('top', false)
+        updatekledge.save()
         res.send({code: msg.postok[0], errMsg: msg.postok[1], data: topup })
       })
     } else {

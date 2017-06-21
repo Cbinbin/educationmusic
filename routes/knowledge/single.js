@@ -27,6 +27,7 @@ router.get('/', (req, res)=> {
       },
       text: oneledge.get('text'),
       comments: changeComment(comments),
+      top: oneledge.get('top') || false,
       objectId: oneledge.id,
       createdAt: moment(oneledge.createdAt).fromNow()
     }

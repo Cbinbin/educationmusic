@@ -39,6 +39,10 @@
     * [获取单个沙龙](#获取单个沙龙)
     * [获取自己发布的沙龙](#获取自己发布的沙龙)
     * [获取已有的沙龙模版](#获取已有的沙龙模版)
+  * [音乐作业](#音乐作业)
+    * [老师布置作业](#老师布置作业)
+    * [老师课时统计](#老师课时统计)
+    * [学生接收作业](#学生接收作业)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -334,6 +338,41 @@
 ### 获取已有的沙龙模版
 ```js
   GET    http://localhost:?/music/salon/modle?token=${token}
+```
+
+
+## 音乐作业
+### 老师布置作业
+```js
+  POST    http://localhost:?/music/teacher/assignment?token=${token}
+```
+```js
+{
+  name: ${name},    //(String)
+  gender: ${gender},    //(Number)
+  classtime: ${classtime},    //上课时间(String)
+  age: ${age},    //(Number)
+  keynote: ${keynote},    //作业及课堂重点(String)
+  rhythmSensation: ${rhythmSensation},    //节奏感(0~5)(Number)
+  readMusic: ${readMusic},    //识谱能力(0~5)(Number)
+  proficiency: ${proficiency},    //熟练度(0~5)(Number)
+  expressiveForce: ${expressiveForce}    //表现力(0~5)(Number)
+}
+```
+
+### 老师课时统计
+```js
+  GET    http://localhost:?/music/teacher/assignment/all?token=${token}
+```
+
+### 学生接收作业
+```js
+  POST    http://localhost:?/music/student/task/receive?token=${token}
+```
+```js
+{
+  taskId: ${taskId}    //作业ID
+}
 ```
 
 

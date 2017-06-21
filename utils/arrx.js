@@ -91,6 +91,18 @@ class arrx {
     return array2
   }
 
+  insertOnePot(val, array) {
+    var array2 = array
+      , exist = false
+    for(var i = 0; i < array.length; i++) {
+      if(array[i].id == val.id) {
+        exist = true
+      }
+    }
+    if(!exist) array2.splice(0, 0, val)
+    return array2
+  }
+
 }
 
 module.exports = arrx
