@@ -10,11 +10,13 @@
     * [删除身份](#删除身份)
   * [我的](#我的)
     * [更改教师信息](#更改教师信息)
+    * [我的学生](#我的学生)
     * [上传二维码](#上传二维码)
     * [更改证书](#更改证书)
     * [更改教学风采](#更改教学风采)
     * [自己发布的知识天地列表](#自己发布的知识天地列表)
     * [自己收到的评论](#自己收到的评论)
+    * [更改学生信息](#更改学生信息)
     * [我的老师](#我的老师)
     * [推荐的老师](#推荐的老师)
     * [搜索老师](#搜索老师)
@@ -42,6 +44,7 @@
   * [音乐作业](#音乐作业)
     * [老师布置作业](#老师布置作业)
     * [老师课时统计](#老师课时统计)
+    * [老师折线图数据](#老师折线图数据)
     * [学生接收作业](#学生接收作业)
     * [学生作业列表](#学生作业列表)
     * [学生单个作业](#学生单个作业)
@@ -158,6 +161,10 @@
   // 上传头像 key: 'music/imgs'
 }
 ```
+### 我的学生
+```js
+  GET    http://localhost:?/music/teacher/mystudent?token=${token}
+```
 ### 上传二维码
 ```js
   POST    http://localhost:?/music/teacher/change/rqcode?token=${token}
@@ -195,6 +202,20 @@
 ### 自己收到的评论
 ```js
   GET    http://localhost:?/music/knowledge/own/comment?token=${token}
+```
+### 更改学生信息
+```js
+  POST    http://localhost:?/music/student/change?token=${token}
+```
+```js
+{
+  realName: ${realName},    //真实姓名(String)
+  gender: ${gender},    //性别(Number)
+  img: ${img},    //头像url(String)
+  age: ${age},    //年龄(Number)
+  labels: ${labels}    //标签(Array)
+  // 上传头像 key: 'music/imgs'
+}
 ```
 ### 我的老师
 ```js
@@ -375,6 +396,10 @@
 ### 老师课时统计
 ```js
   GET    http://localhost:?/music/teacher/assignment/all?token=${token}
+```
+### 老师折线图数据
+```js
+  GET    http://localhost:?/music/teacher/assignment/linechart?token=${token}
 ```
 
 ### 学生接收作业

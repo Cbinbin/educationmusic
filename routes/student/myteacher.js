@@ -8,14 +8,38 @@ const router = require('express').Router()
 router.get('/', (req, res)=> {
   const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')
+    , querytask = new AV.Query('Task')
   queryuser.include('student')
   queryuser.get(userId).then((user)=> {
-    var student = user.get('student')
+    var student = user.get('student') || null
+      , studentPot = AV.Object.createWithoutData('Student', student.id)
       , querystudent = new AV.Query('Student')
+    if(!student) return res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: '你不是学生' })
     querystudent.include('myTeacher')
+    querytask.equalTo('student', studentPot)
     querystudent.get(student.id).then((iamstudent)=> {
-      var myTeacher = iamstudent.get('myTeacher')
-      res.send({code: msg.getok[0], errMsg: msg.getok[1], data: myTeacher })
+      querytask.find().then((mytasks)=> {
+        var myTeacher = iamstudent.get('myTeacher')
+          , myteacherArr = []
+        myTeacher.forEach((teacherone)=> {
+          var taskNum = 0
+          mytasks.forEach((taskone)=> {
+            if(taskone.get('teacher').id == teacherone.id) taskNum += 1
+          })
+          myteacherArr.push({
+            realName: teacherone.get('realName') || null,
+            img: teacherone.get('img') || null,
+            gender: teacherone.get('gender') || 0,
+            instrument: teacherone.get('instrument') || null,
+            labels: teacherone.get('labels') || [],
+            introduction: teacherone.get('introduction') || null,
+            objectId: teacherone.id,
+            createdAt: teacherone.createdAt,
+            taskNum: taskNum
+          })
+        })
+        res.send({code: msg.getok[0], errMsg: msg.getok[1], data: myteacherArr })
+      })
     })
   })
 })

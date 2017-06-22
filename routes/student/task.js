@@ -127,7 +127,7 @@ router.get('/linechart', (req, res)=> {
         , numArr = []
         , stampArr = []
         , keyArr = []
-        , chartData = {}
+        , chartData = []
       tasks.forEach((task)=> {
         taskes.push({
           objectId: task.id,
@@ -145,7 +145,9 @@ router.get('/linechart', (req, res)=> {
       }
       keyArr = dt.key3month(nowdate.year, nowdate.month)
       for(var l = 0; l < keyArr.length; l++) {
-        chartData[keyArr[l]] = numArr[l]
+        var oneData = {}
+        oneData[keyArr[l]] = numArr[l]
+        chartData.push(oneData)
       }
       res.send({code: msg.getok[0], errMsg: msg.getok[1], data: chartData })
     })

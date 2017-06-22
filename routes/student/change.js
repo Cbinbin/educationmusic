@@ -14,11 +14,12 @@ router.post('/', (req, res)=> {
       , querystudent = new AV.Query('Student')
     querystudent.get(studentId).then((studentone)=> {
       qcos.upload(req, res, 'music/imgs').then((imgUrl)=> {
-        var labels = studentone.get('labels')
-          , imgurl = studentone.get('img')
-        if(req.body.addlabel) labels = arr.insertOne(req.body.addlabel, labels)
-        if(req.body.rdulabel) labels = arr.pruneOne(req.body.rdulabel, labels)
-        if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
+        var imgurl = studentone.get('img')
+          , labels = req.body.labels ? req.body.labels : []
+        //   , labels = studentone.get('labels')
+        // if(req.body.addlabel) labels = arr.insertOne(req.body.addlabel, labels)
+        // if(req.body.rdulabel) labels = arr.pruneOne(req.body.rdulabel, labels)
+        // if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
         studentone.set('labels', labels)
         if(imgUrl) {
           studentone.set('img', imgUrl)
@@ -30,7 +31,6 @@ router.post('/', (req, res)=> {
         if(req.body.realName) studentone.set('realName', req.body.realName)
         if(req.body.gender) studentone.set('gender', Number(req.body.gender))
         if(req.body.age) studentone.set('age', Number(req.body.age))
-        // if(req.body.show) studentone.set('show', show)
         studentone.save().then((iamstudent)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamstudent })
         })
