@@ -45,6 +45,7 @@
     * [学生接收作业](#学生接收作业)
     * [学生作业列表](#学生作业列表)
     * [学生单个作业](#学生单个作业)
+    * [学生折线图数据](#学生折线图数据)
   * [学生视频](#学生视频)
     * [上传视频](#上传视频)
     * [增加字段](#增加字段)
@@ -390,6 +391,10 @@
 ### 学生单个作业
 ```js
   GET    http://localhost:?/music/student/task/single?token=${token}&taskid=${taskid}
+```
+### 学生折线图数据
+```js
+  GET    http://localhost:?/music/student/task/linechart?token=${token}
 ```
 
 

@@ -1,8 +1,10 @@
 const router = require('express').Router()
   , AV = require('leanengine')
   , msg = require('../../utils/msg')
+  , datetime = require('../../utils/datetime')
   , arrx = require('../../utils/arrx')
   , arr = new arrx
+  , dt = new datetime
 
 router.post('/receive', (req, res)=> {
   const userId = req.music.userId
@@ -111,6 +113,7 @@ router.get('/single', (req, res)=> {
 
 router.get('/linechart', (req, res)=> {
   const userId = req.music.userId
+    , nowdate = dt.splitDate(new Date())
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('student')
   queryuser.get(userId).then((user)=> {
@@ -121,6 +124,10 @@ router.get('/linechart', (req, res)=> {
     querytask.ascending('createdAt')
     querytask.find().then((tasks)=> {
       var taskes = []
+        , numArr = []
+        , stampArr = []
+        , keyArr = []
+        , chartData = {}
       tasks.forEach((task)=> {
         taskes.push({
           objectId: task.id,
@@ -128,7 +135,19 @@ router.get('/linechart', (req, res)=> {
           timestamp: new Date(task.createdAt).getTime()
         })
       })
-      res.send({code: msg.getok[0], errMsg: msg.getok[1], data: taskes })
+      stampArr = dt.output3monthweekstamp(nowdate.year, nowdate.month)
+      for(var k = 0; k < stampArr.length; k++) {
+        var weektaskNum = 0
+        taskes.forEach((taske)=> {
+          if(stampArr[k][0] <= taske.timestamp && taske.timestamp < stampArr[k][1]) weektaskNum += 1
+        })
+        numArr.push(weektaskNum)
+      }
+      keyArr = dt.key3month(nowdate.year, nowdate.month)
+      for(var l = 0; l < keyArr.length; l++) {
+        chartData[keyArr[l]] = numArr[l]
+      }
+      res.send({code: msg.getok[0], errMsg: msg.getok[1], data: chartData })
     })
   })
 })

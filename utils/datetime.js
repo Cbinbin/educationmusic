@@ -22,6 +22,106 @@ class datetime {
     return obj
   }
 
+  output3monthweek(year, month) {
+    var starttime = '00:00:00'
+      , year = Number(year)
+      , month = Number(month)
+      , weekArr = []
+    for(var i = month-1; i < month+2; i++) {
+      var valmon = 0
+        , valyear = 2017
+      if(i > 12) {
+        valmon = i-12
+        valyear = year+1
+      } else if(i == 0) {
+        valmon = i+12
+        valyear = year-1
+      } else {
+        valmon = i
+        valyear = year
+      }
+      for(var j = 1; j < 5; j++) {
+        var timeper = []
+        if(j < 4) {
+          timeper[0] = `${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`
+          timeper[1] = `${valyear}-${valmon}-${7*j + 1} ${starttime}`
+        } else {
+          if(valmon == 12) {
+            timeper[0] = `${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`
+            timeper[1] = `${valyear+1}-${(valmon+1) - 12}-${1} ${starttime}`
+          } else {
+            timeper[0] = `${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`
+            timeper[1] = `${valyear}-${valmon+1}-${1} ${starttime}`
+          }
+        }
+        weekArr.push(timeper)
+      }
+    }
+    return weekArr
+  }
+
+  output3monthweekstamp(year, month) {
+    var starttime = '00:00:00'
+      , year = Number(year)
+      , month = Number(month)
+      , weekArr = []
+    for(var i = month-1; i < month+2; i++) {
+      var valmon = 0
+        , valyear = 2017
+      if(i > 12) {
+        valmon = i-12
+        valyear = year+1
+      } else if(i == 0) {
+        valmon = i+12
+        valyear = year-1
+      } else {
+        valmon = i
+        valyear = year
+      }
+      for(var j = 1; j < 5; j++) {
+        var timeper = []
+        if(j < 4) {
+          timeper[0] = new Date(`${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`).getTime()
+          timeper[1] = new Date(`${valyear}-${valmon}-${7*j + 1} ${starttime}`).getTime()
+        } else {
+          if(valmon == 12) {
+            timeper[0] = new Date(`${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`).getTime()
+            timeper[1] = new Date(`${valyear+1}-${(valmon+1) - 12}-${1} ${starttime}`).getTime()
+          } else {
+            timeper[0] = new Date(`${valyear}-${valmon}-${7*(j-1) + 1} ${starttime}`).getTime()
+            timeper[1] = new Date(`${valyear}-${valmon+1}-${1} ${starttime}`).getTime()
+          }
+        }
+        weekArr.push(timeper)
+      }
+    }
+    return weekArr
+  }
+
+  key3month(year, month) {
+    var keyArr = []
+      , year = Number(year)
+      , month = Number(month)
+    for(var i = month-1; i < month+2; i++) {
+      var valmon = 0
+        , valyear = 2017
+      if(i > 12) {
+        valmon = i-12
+        valyear = year+1
+      } else if(i == 0) {
+        valmon = i+12
+        valyear = year-1
+      } else {
+        valmon = i
+        valyear = year
+      }
+      for(var j = 1; j < 5; j++) {
+        keyArr.push(`${valmon}_${j}`)
+      }
+    }
+    return keyArr
+  }
+
 }
 
 module.exports = datetime

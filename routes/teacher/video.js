@@ -116,7 +116,7 @@ router.post('/delone', (req, res)=> {
         , delvideo = AV.Object.createWithoutData('Video', video.id)
       if(teacherId != videoteacher.id) return res.send({code: msg.notYours[0], errMsg: msg.notYours[1], data: 'videoId' })
       delvideo.destroy().then(()=> {
-        res.send({code: msg.getok[0], errMsg: msg.getok[1], data: 'deleted success' })
+        res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'deleted success' })
       })
     }, (err)=> {
       res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'videoId' })
