@@ -151,8 +151,9 @@
   gender: ${gender},    //性别(Number)
   introduction: ${introduction},    //自我介绍(String)
   show: ${show},    //展示(Boolean)
-  addlabel: ${addlabel},    //添加1个标签(String)
-  rdulabel: ${rdulabel}    //删减1个标签(String)
+  labels: ${labels}    //标签(Array)
+  // addlabel: ${addlabel},    //添加1个标签(String)
+  // rdulabel: ${rdulabel}    //删减1个标签(String)
   // 上传头像 key: 'music/imgs'
 }
 ```
