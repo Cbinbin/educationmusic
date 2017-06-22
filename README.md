@@ -150,6 +150,7 @@
   realName: ${realName},    //真实姓名(String)
   gender: ${gender},    //性别(Number)
   introduction: ${introduction},    //自我介绍(String)
+  instrument: ${instrument},    //职业方向(String)
   show: ${show},    //展示(Boolean)
   labels: ${labels}    //标签(Array)
   // addlabel: ${addlabel},    //添加1个标签(String)
