@@ -46,6 +46,26 @@ router.post('/receive', (req, res)=> {
   })
 })
 
+router.post('/schedules', (req, res)=> {
+  const userId = req.music.userId
+    , taskId = req.body.taskId || 'null'
+  var queryuser = new AV.Query('Usermusic')
+  queryuser.get(userId).then((user)=> {
+    var student = user.get('student')
+      , querytask = new AV.Query('Task')
+    querytask.get(taskId).then((task)=> {
+      var taskstudent = task.get('student')
+      if(student.id != taskstudent.id) return res.send({code: msg.notYours[0], errMsg: msg.notYours[1], data: 'taskId' })
+      if(req.body.schedules) task.set('schedules', req.body.schedules)
+      task.save().then((taskup)=> {
+        res.send({code: msg.postok[0], errMsg: msg.postok[1], data: taskup })
+      })
+    }, (err)=> {
+      res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'taskId' })
+    })
+  })
+})
+
 router.get('/all', (req, res)=> {
   const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')

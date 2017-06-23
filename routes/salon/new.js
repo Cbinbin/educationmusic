@@ -35,7 +35,7 @@ router.post('/', (req, res)=> {
     newsolon.save().then((solon)=> {
       var addNum = 10
       if(isFree && isOpen) addNum += 10
-      integralChange(addNum, user.id, '音乐沙龙🎵')
+      integralChange(addNum, user.id, '音乐沙龙🎵', 2)
       user.set('integral', (integral + addNum))
       user.save()
       res.send({code: msg.postok[0], errMsg: msg.postok[1], data: solon })

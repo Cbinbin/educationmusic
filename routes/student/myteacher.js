@@ -23,20 +23,22 @@ router.get('/', (req, res)=> {
           , myteacherArr = []
         myTeacher.forEach((teacherone)=> {
           var taskNum = 0
-          mytasks.forEach((taskone)=> {
-            if(taskone.get('teacher').id == teacherone.id) taskNum += 1
-          })
-          myteacherArr.push({
-            realName: teacherone.get('realName') || null,
-            img: teacherone.get('img') || null,
-            gender: teacherone.get('gender') || 0,
-            instrument: teacherone.get('instrument') || null,
-            labels: teacherone.get('labels') || [],
-            introduction: teacherone.get('introduction') || null,
-            objectId: teacherone.id,
-            createdAt: teacherone.createdAt,
-            taskNum: taskNum
-          })
+          if(teacherone) {
+            mytasks.forEach((taskone)=> {
+              if(taskone.get('teacher').id == teacherone.id) taskNum += 1
+            })
+            myteacherArr.push({
+              realName: teacherone.get('realName') || null,
+              img: teacherone.get('img') || null,
+              gender: teacherone.get('gender') || 0,
+              instrument: teacherone.get('instrument') || null,
+              labels: teacherone.get('labels') || [],
+              introduction: teacherone.get('introduction') || null,
+              objectId: teacherone.id,
+              createdAt: teacherone.createdAt,
+              taskNum: taskNum
+            })
+          }
         })
         res.send({code: msg.getok[0], errMsg: msg.getok[1], data: myteacherArr })
       })

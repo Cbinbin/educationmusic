@@ -64,7 +64,7 @@ router.post('/rqcode', (req, res)=> {
           teacherone.set('rqcode', rqcodeUrl)
           if(!codeurl) {
             var integral = userinfo.get('integral')
-            integralChange(10, userinfo.id, '信息完善-二维码')
+            integralChange(10, userinfo.id, '信息完善-二维码', 4)
             userinfo.set('integral', (integral + 10))
             userinfo.save()
           }
@@ -92,19 +92,19 @@ router.post('/cert', (req, res)=> {
         , certjudge = teacherone.get('certjudge') || false
       qcos.upload(req, res, 'music/certs').then((certUrl)=> {
         var rducertUrl = req.body.rducertUrl
-        arr.pruneOne(rducertUrl, certs)
+        certs = arr.pruneOne(rducertUrl, certs)
         if(certs.length != certlength) qcos.deleteKey(rducertUrl).then()
         if(certUrl) {
           certs = arr.insertOne(certUrl, certs)
-          teacherone.set('certs', certs)
           teacherone.set('certjudge', true)
           if(!certjudge) {
             var integral = userinfo.get('integral')
-            integralChange(10, userinfo.id, '信息完善-证书')
+            integralChange(10, userinfo.id, '信息完善-证书', 4)
             userinfo.set('integral', (integral + 10))
             userinfo.save()
           }
         }
+        teacherone.set('certs', certs)
         teacherone.save().then((iamteacher)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
         })
@@ -129,19 +129,19 @@ router.post('/style', (req, res)=> {
         , videojudge = teacherone.get('videojudge') || false
       qcos.upload(req, res, 'music/videos').then((videoUrl)=> {
         var rduvideoUrl = req.body.rduvideoUrl
-        arr.pruneOne(rduvideoUrl, videos)
+        videos = arr.pruneOne(rduvideoUrl, videos)
         if(videos.length != videolength) qcos.deleteKey(rduvideoUrl).then()
         if(videoUrl) {
           videos = arr.insertOne(videoUrl, videos)
-          teacherone.set('videos', videos)
           teacherone.set('videojudge', true)
           if(!videojudge) {
             var integral = userinfo.get('integral')
-            integralChange(10, userinfo.id, '信息完善-教学风采')
+            integralChange(10, userinfo.id, '信息完善-教学风采', 4)
             userinfo.set('integral', (integral + 10))
             userinfo.save()
           }
         }
+        teacherone.set('videos', videos)
         teacherone.save().then((iamteacher)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamteacher })
         })

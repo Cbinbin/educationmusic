@@ -17,7 +17,7 @@ router.post('/', (req, res)=> {
     var queryuser = new AV.Query('Usermusic')
     queryuser.get(userId).then((user)=> {
       var integral = user.get('integral')
-      integralChange(10, user.id, '知识天地')
+      integralChange(10, user.id, '知识天地', 1)
       user.set('integral', (integral + 10))
       user.save()
     }, (err)=> {
