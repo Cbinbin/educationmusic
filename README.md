@@ -72,6 +72,7 @@
     * [单个取消置顶](#单个取消置顶)
   * [交易记录](#交易记录)
     * [获取记录所有](#获取记录所有)
+    * [更改记录状态](#更改记录状态)
     * [删除记录单个](#删除记录单个)
 
 
@@ -591,9 +592,23 @@
 
 
 ## 交易记录
-
 ### 获取记录所有
+```js
+  GET    http://localhost:?/admin/trade/all?token=${token}
+```
 
 ### 删除记录单个
+```js
+  POST    http://localhost:?/admin/trade/del?token=${token}
+```
+```js
+{
+  voucherId: ${voucherId}
+}
+```
 
+<!-- ### 更改记录状态
+```js
+  POST    http://localhost:?/admin/trade/status?token=${token}
+``` -->
 

@@ -17,12 +17,12 @@ router.post('/', (req, res)=> {
     queryteacher.get(teacherId).then((teacherone)=> {
       qcos.upload(req, res, 'music/imgs').then((imgUrl)=> {
         var imgurl = teacherone.get('img')
-          , labels = req.body.labels ? req.body.labels : []
+          , labels = req.body.labels
         //   , labels = teacherone.get('labels')
         // if(req.body.addlabel) labels = arr.insertOne(req.body.addlabel, labels)
         // if(req.body.rdulabel) labels = arr.pruneOne(req.body.rdulabel, labels)
         // if(labels.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'labels长度不能大于三个' })
-        teacherone.set('labels', labels)
+        if(labels) teacherone.set('labels', labels)
         if(req.body.lat) teacherone.set('lat', Number(req.body.lat))
         if(req.body.lng) teacherone.set('lng', Number(req.body.lng))
         if(imgUrl) {
