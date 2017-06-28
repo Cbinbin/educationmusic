@@ -25,14 +25,22 @@ router.get('/integral', (req, res)=> {
         default: null
       }
     })
-    var chartData = {
-      knowledge: `${Math.round((sum1/incomeSum)*1000)/10}%`, 
-      salon: `${Math.round((sum2/incomeSum)*1000)/10}%`, 
-      sign: `${Math.round((sum3/incomeSum)*1000)/10}%`, 
-      other: `${Math.round((sum4/incomeSum)*1000)/10}%`, 
-      tatol: incomeSum
-    }
-    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: chartData })
+    var chartData = [
+      { 
+        name: '知识天地',
+        data: Math.round((sum1/incomeSum)*1000)/10
+      }, {
+        name: '活动发起',
+        data: Math.round((sum2/incomeSum)*1000)/10
+      }, {
+        name: '打卡签到',
+        data: Math.round((sum3/incomeSum)*1000)/10
+      }, {
+        name: '补充档案',
+        data: Math.round((sum4/incomeSum)*1000)/10
+      } 
+    ]
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: {chartData: chartData, tatol: incomeSum} })
   })
 })
 

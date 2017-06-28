@@ -17,10 +17,14 @@ router.post('/', (req, res)=> {
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('teacher')
   queryuser.get(userId).then((user)=> {
-    var teacher = user.get('teacher')
+    var teacher = user.get('teacher') || null
+      , teacherName = teacher != null ? teacher.get('realName') : null
+      , teacherImg = teacher != null ? teacher.get('img') : null
       , teacherPot = AV.Object.createWithoutData('Teacher', teacher.id)
       , assignment = new AV.Object('Task')
     assignment.set('teacher', teacherPot)
+    assignment.set('teacherName', teacherName)
+    assignment.set('teacherImg', teacherImg)
     assignment.set('name', req.body.name)
     assignment.set('gender', Number(req.body.gender))
     assignment.set('classtime', req.body.classtime)

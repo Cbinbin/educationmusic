@@ -85,10 +85,18 @@ router.get('/all', (req, res)=> {
         taskes.push({
           teacherId: teacher != null ? teacher.id : null,
           teacherName: teacher != null ? teacher.get('realName') : null,
+          teacherImg: teacher != null ? teacher.get('img') : null,
           classtime: task.get('classtime') || null,
+          rhythmSensation: task.get('rhythmSensation') || 1,
+          readMusic: task.get('readMusic') || 1,
+          proficiency: task.get('proficiency') || 1,
+          expressiveForce: task.get('expressiveForce') || 1,
+          keynote: task.get('keynote') || null,
+          schedules: task.get('schedules'),
           finish: schedules.toString() === [1, 1, 1, 1, 1, 1, 1].toString() ? true : false,
           objectId: task.id,
-          createdAt: task.createdAt
+          createdAt: task.createdAt,
+          updatedAt: task.updatedAt
         })
       })
       res.send({code: msg.getok[0], errMsg: msg.getok[1], data: {task: taskes, taskNum: taskes.length} })

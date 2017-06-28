@@ -133,6 +133,7 @@ router.post('/style', (req, res)=> {
         if(videos.length != videolength) qcos.deleteKey(rduvideoUrl).then()
         if(videoUrl) {
           videos = arr.insertOne(videoUrl, videos)
+          if(videos.length > 3) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: 'videos长度不能大于三个' })
           teacherone.set('videojudge', true)
           if(!videojudge) {
             var integral = userinfo.get('integral')
