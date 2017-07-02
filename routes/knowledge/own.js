@@ -17,7 +17,7 @@ router.get('/', (req, res)=> {
   querykledge.descending('createdAt')
   querykledge.find().then((ownledges)=> {
     var user = ownledges[0].get('user')
-      , types = user.get('types')
+      , types = user.get('types') || null
       , identity = types == 'teacher' ? user.get('teacher') : 
       (types == 'student' ? user.get('student') : null)
       , knowledges = []
@@ -26,9 +26,9 @@ router.get('/', (req, res)=> {
       knowledges.push({
         userId: user.id,
         identity: {
-          realName: identity.get('realName') || null,
-          img: identity.get('img') || null,
-          objectId: identity.id || null
+          realName: identity != null ? identity.get('realName') : null,
+          img: identity != null ? identity.get('img') : null,
+          objectId: identity != null ? identity.id : null
         },
         text: oneledge.get('text'),
         comments: changeComment(comments),

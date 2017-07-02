@@ -21,18 +21,19 @@ router.get('/list', (req, res)=> {
         , knowledgestop = []
       ownledges.forEach((oneledge)=> {
         var user = oneledge.get('user')
-          , types = user.get('types')
+          , types = user.get('types') || null
           , identity = types == 'teacher' ? user.get('teacher') : 
           (types == 'student' ? user.get('student') : null)
           , comments = oneledge.get('comments') || null
         knowledges.push({
           userId: user.id,
           identity: {
-            realName: identity.get('realName') || null,
-            img: identity.get('img') || null,
-            objectId: identity.id || null
+            realName: identity != null ? identity.get('realName') : null,
+            img: identity != null ? identity.get('img') : null,
+            objectId: identity != null ? identity.id : null
           },
           text: oneledge.get('text'),
+          top: oneledge.get('top'),
           comments: changeComment(comments),
           objectId: oneledge.id,
           createdAt: moment(oneledge.createdAt).fromNow()

@@ -20,7 +20,7 @@ router.post('/', (req, res)=> {
       var knowledgePot = AV.Object.createWithoutData('Knowledge', kledge.id)
         , userPot = AV.Object.createWithoutData('Usermusic', user.id)
         , newcomment = new AV.Object('Comment')
-        , types = user.get('types')
+        , types = user.get('types') || null
         , userName = types == 'teacher' ? user.get('teacher').get('realName') : 
                     (types == 'student' ? user.get('student').get('realName') : '')
         , comments = kledge.get('comments')

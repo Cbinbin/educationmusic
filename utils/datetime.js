@@ -116,7 +116,7 @@ class datetime {
         valyear = year
       }
       for(var j = 1; j < 5; j++) {
-        keyArr.push(`${valmon}_${j}`)
+        keyArr.push(`${valmon}／${j}`)
       }
     }
     return keyArr

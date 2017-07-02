@@ -22,8 +22,12 @@ function aboutComment(userId) {
               queryall = AV.Query.or(querycomment1, querycomment2)
             } else if(i == ownledges.length-1) {
               var querycommentother = new AV.Query('Comment')
+                , querycommentmy = new AV.Query('Comment')
               querycommentother.equalTo('other', userPot)
+              querycommentmy.equalTo('own', userPot)
+              querycommentmy.exists('other')
               queryall = AV.Query.or(querycommentother, queryall)
+              queryall = AV.Query.or(querycommentmy, queryall)
             } else {
               var querycommentch = new AV.Query('Comment')
                 , kledgePotch = AV.Object.createWithoutData('Knowledge', ownledges[i+1].id)
@@ -38,8 +42,12 @@ function aboutComment(userId) {
           querycomment.equalTo('knowledge', kledgePot)
           querycomment.doesNotExist('other')
           var querycommentother = new AV.Query('Comment')
+            , querycommentmy = new AV.Query('Comment')
           querycommentother.equalTo('other', userPot)
+          querycommentmy.equalTo('own', userPot)
+          querycommentmy.exists('other')
           queryall = AV.Query.or(querycommentother, querycomment)
+          queryall = AV.Query.or(querycommentmy, queryall)
         }
         queryall.descending('createdAt')
         queryall.include('knowledge')
