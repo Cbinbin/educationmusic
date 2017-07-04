@@ -57,6 +57,10 @@
     * [获取自己的视频](#获取自己的视频)
     * [获取自己单个](#获取自己单个)
     * [删除自己单个](#删除自己单个)
+  * [学生收藏](#学生收藏)
+    * [单个沙龙收藏](#单个沙龙收藏)
+    * [获取收藏沙龙](#获取收藏沙龙)
+    * [全部可见沙龙](#全部可见沙龙)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -483,6 +487,33 @@
 {
   videoId: ${videoId}
 }
+```
+## 学生收藏
+### 单个沙龙收藏
+```js
+  POST    http://localhost:?/music/student/shalong/collect?token=${token}
+```
+```js
+{
+  salonId: ${salonId}
+}
+```
+### 单个沙龙取消收藏
+```js
+  POST    http://localhost:?/music/student/shalong/cancel?token=${token}
+```
+```js
+{
+  salonId: ${salonId}
+}
+```
+### 获取收藏沙龙
+```js
+  GET    http://localhost:?/music/student/shalong/mycollects?token=${token}
+```
+### 全部可见沙龙
+```js
+  GET    http://localhost:?/music/student/shalong/all?token=${token}
 ```
 
 

@@ -13,7 +13,7 @@ function salonFormat(salon) {
     isFree: salon.get('isFree') || null,
     isOpen: salon.get('isOpen') || null,
     modle: salon.get('modle') || null,
-    phone: salon.get('phone') || 0,
+    phone: salon.get('phone') || null,
     teacherName: teacher != null ? teacher.get('realName') : null,
     objectId: salon.id,
     createdAt: salon.createdAt,

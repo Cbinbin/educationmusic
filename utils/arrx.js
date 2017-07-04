@@ -9,6 +9,14 @@ class arrx {
     return exist
   }
 
+  inToPot(array, val) {  
+    var exist = false
+    for(var i = 0; i < array.length; i++) {
+      if(array[i].id == val.id) return exist = true
+    }
+    return exist
+  }
+
   inToModleId(array, val) {  
     var exist = false
     for(var i = 0; i < array.length; i++) {
