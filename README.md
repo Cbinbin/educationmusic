@@ -59,8 +59,10 @@
     * [删除自己单个](#删除自己单个)
   * [学生收藏](#学生收藏)
     * [单个沙龙收藏](#单个沙龙收藏)
+    * [单个沙龙取消收藏](#单个沙龙取消收藏)
     * [获取收藏沙龙](#获取收藏沙龙)
     * [全部可见沙龙](#全部可见沙龙)
+    * [查看单个沙龙](#查看单个沙龙)
 
 * [教育后台](#教育后台)
   * [管理登录](#管理登录)
@@ -514,6 +516,10 @@
 ### 全部可见沙龙
 ```js
   GET    http://localhost:?/music/student/shalong/all?token=${token}
+```
+### 查看单个沙龙
+```js
+  GET    http://localhost:?/music/student/shalong/one/detail?token=${token}&salonid=${salonid}
 ```
 
 

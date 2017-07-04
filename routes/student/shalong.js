@@ -69,7 +69,7 @@ router.get('/mycollects', (req, res)=> {
     var student = user.get('student') || null
     if(!student) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '你不是学生' })
     querystudent.get(student.id).then((iamstudent)=> {
-      var shalongIds = iamstudent.get('shalongIds')
+      var shalongIds = iamstudent.get('shalongIds') || []
         , queryall = null
         , shalongs = []
       shalongIds.forEach((shalongId)=> {
@@ -82,7 +82,9 @@ router.get('/mycollects', (req, res)=> {
       queryall.include('user.teacher')
       queryall.find().then((allshalong)=> {
         allshalong.forEach((salon)=> {
-          shalongs.push(salonFormat(salon))
+          var salonone = salonFormat(salon)
+          salonone.collected = true
+          shalongs.push(salonone)
         })
         res.send({code: msg.getok[0], errMsg: msg.getok[1], data: shalongs })
       })
@@ -94,12 +96,62 @@ router.get('/all', (req, res)=> {
   const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')
     , querystudent = new AV.Query('Student')
+    , querysalon = new AV.Query('Salon')
   queryuser.include('student')
   queryuser.get(userId).then((user)=> {
     var student = user.get('student') || null
     if(!student) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '你不是学生' })
-    querystudent.get(student.id).then((iamstudent)=> {
+    querysalon.include('user')
+    querysalon.include('user.teacher')
+    querysalon.descending('createdAt')
+    querysalon.find().then((allshalong)=> {
+      querystudent.get(student.id).then((iamstudent)=> {
+        var shalongIds = iamstudent.get('shalongIds') || []
+          , shalongs = []
+        allshalong.forEach((shalong)=> {
+          var collected = false
+            , salonone = salonFormat(shalong)
+          shalongIds.forEach((shalongId)=> {
+            if(shalong.id == shalongId.id) collected = true
+          })
+          salonone.collected = collected
+          shalongs.push(salonone)
+        })
+        res.send({code: msg.getok[0], errMsg: msg.getok[1], data: shalongs })
+      })
+    })
+  })
+})
 
+router.get('/one/detail', (req, res)=> {
+  const userId = req.music.userId
+  const salonid = req.query.salonid || 'undefined'
+  var queryuser = new AV.Query('Usermusic')
+    , querysalon = new AV.Query('Salon')
+  querysalon.include('user')
+  querysalon.include('user.teacher')
+  queryuser.include('student')
+  queryuser.include('student.shalongIds')
+  queryuser.get(userId).then((user)=> {
+    querysalon.get(salonid).then((salon)=> {
+      var student = user.get('student') || null
+      if(!student) return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '你不是学生' })
+      var shalongIds = student.get('shalongIds') || []
+        , salonre = salonFormat(salon)
+      if(arr.inToPot(shalongIds, salon)) salonre.collected = true
+      else salonre.collected = false
+      if(salonre.modle) {
+        var querymodle = new AV.Query('Modle')
+        querymodle.get(salonre.modle).then((modleone)=> {
+          salonre.modle = {
+            objectId: modleone.id,
+            background: modleone.get('background')
+          }
+          res.send({code: msg.getok[0], errMsg: msg.getok[1], data: salonre })
+        })
+      } else res.send({code: msg.getok[0], errMsg: msg.getok[1], data: salonre })
+    }, (err)=> {
+      res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'salonid' })
     })
   })
 })

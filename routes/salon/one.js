@@ -5,7 +5,7 @@ const router = require('express').Router()
 
 router.get('/', (req, res)=> {
   const userId = req.music.userId
-  const salonid = req.query.salonid || undefined
+  const salonid = req.query.salonid || 'undefined'
   var querysalon = new AV.Query('Salon')
   querysalon.include('user')
   querysalon.include('user.teacher')
