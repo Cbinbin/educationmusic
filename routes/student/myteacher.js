@@ -51,6 +51,7 @@ router.get('/recommend', (req, res)=> {
     , lat = req.query.lat ? Number(req.query.lat) : 0
     , lng = req.query.lng ? Number(req.query.lng) : 0
   var queryteacher = new AV.Query('Teacher')
+  queryteacher.equalTo('show', true)
   queryteacher.find().then((allteacher)=> {
     var teachers = []
     allteacher.forEach((one)=> {
