@@ -167,7 +167,8 @@
   introduction: ${introduction},    //自我介绍(String)
   instrument: ${instrument},    //职业方向(String)
   show: ${show},    //展示(Boolean)
-  labels: ${labels}    //标签(Array)
+  labels: ${labels},    //标签(Array)
+  noticeNew: ${noticeNew}
   // addlabel: ${addlabel},    //添加1个标签(String)
   // rdulabel: ${rdulabel}    //删减1个标签(String)
   // 上传头像 key: 'music/imgs'
@@ -229,7 +230,8 @@
   gender: ${gender},    //性别(Number)
   img: ${img},    //头像url(String)
   age: ${age},    //年龄(Number)
-  labels: ${labels}    //标签(Array)
+  labels: ${labels},    //标签(Array)
+  noticeNew: ${noticeNew}    //(Boolean)
   // 上传头像 key: 'music/imgs'
 }
 ```

@@ -20,6 +20,7 @@ router.get('/', (req, res)=> {
         introduction: teacher.get('introduction') || null,
         realName: teacher.get('realName') || null,
         img: teacher.get('img') || null,
+        noticeNew: teacher.get('noticeNew') || false,
         objectId: teacher.id,
         createdAt: teacher.createdAt
       },

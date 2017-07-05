@@ -7,6 +7,7 @@ const router = require('express').Router()
 
 router.post('/', (req, res)=> {
   const userId = req.music.userId
+    , noticeNew = req.body.noticeNew === true ? true : false
   var queryuser = new AV.Query('Usermusic')
   queryuser.include('student')
   queryuser.get(userId).then((userinfo)=> {
@@ -31,6 +32,7 @@ router.post('/', (req, res)=> {
         if(req.body.realName) studentone.set('realName', req.body.realName)
         if(req.body.gender) studentone.set('gender', Number(req.body.gender))
         if(req.body.age) studentone.set('age', Number(req.body.age))
+        if(req.body.noticeNew !== undefined) studentone.set('noticeNew', noticeNew)
         studentone.save().then((iamstudent)=> {
           res.send({code: msg.postok[0], errMsg: msg.postok[1], data: iamstudent })
         })

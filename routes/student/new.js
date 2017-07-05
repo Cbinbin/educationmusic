@@ -22,6 +22,7 @@ router.post('/', (req, res)=> {
     newstudent.set('age', Number(req.body.age))
     newstudent.set('tasks', [])
     newstudent.set('myTeacher', [])
+    newstudent.set('noticeNew', false)
     newstudent.save().then((iamstudent)=> {
       var studentPot = AV.Object.createWithoutData('Student', iamstudent.id)
       userinfo.set('student', studentPot)

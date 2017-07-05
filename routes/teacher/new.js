@@ -28,6 +28,7 @@ router.post('/', (req, res)=> {
     newteacher.set('videos', [])
     newteacher.set('myStudent', [])
     newteacher.set('assignments', [])
+    newteacher.set('noticeNew', false)
     newteacher.save().then((iamteacher)=> {
       var teacherPot = AV.Object.createWithoutData('Teacher', iamteacher.id)
       userinfo.set('teacher', teacherPot)

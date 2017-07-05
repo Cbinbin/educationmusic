@@ -78,6 +78,7 @@ router.get('/mycollects', (req, res)=> {
         if(!queryall) queryall = AV.Query.or(querysalon)
         else queryall = AV.Query.or(querysalon, queryall)
       })
+      if(!queryall) return res.send({code: msg.getok[0], errMsg: msg.getok[1], data: [] })
       queryall.include('user')
       queryall.include('user.teacher')
       queryall.find().then((allshalong)=> {

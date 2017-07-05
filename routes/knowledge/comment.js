@@ -15,6 +15,9 @@ router.post('/', (req, res)=> {
     , queryuser = new AV.Query('Usermusic')
   queryuser.include('teacher')
   queryuser.include('student')
+  querykledge.include('user')
+  querykledge.include('user.teacher')
+  querykledge.include('user.student')
   queryuser.get(userId).then((user)=> {
     querykledge.get(kledgeId).then((kledge)=> {
       var knowledgePot = AV.Object.createWithoutData('Knowledge', kledge.id)
@@ -33,7 +36,7 @@ router.post('/', (req, res)=> {
           var other = othercomment.get('own')
             , commentPot = AV.Object.createWithoutData('Comment', othercomment.id)
             , otherPot = AV.Object.createWithoutData('Usermusic', other.id)
-            , otherTypes = other.get('types')
+            , otherTypes = other.get('types') || null
             , otherName = otherTypes == 'teacher' ? other.get('teacher').get('realName') : 
                          (otherTypes == 'student' ? other.get('student').get('realName') : '')
           newcomment.set('own', userPot)
@@ -45,6 +48,14 @@ router.post('/', (req, res)=> {
           newcomment.set('retext', String(retext))
           newcomment.save().then((comment)=> {
             var commentcn = AV.Object.createWithoutData('Comment', comment.id)
+              , identityId = otherTypes == 'teacher' ? other.get('teacher').id : 
+                         (otherTypes == 'student' ? other.get('student').id : '')
+              , changeIdentity = otherTypes == 'teacher' ? AV.Object.createWithoutData('Teacher', identityId) : 
+                         (otherTypes == 'student' ? AV.Object.createWithoutData('Student', identityId) : null)
+            if(changeIdentity) {
+              changeIdentity.set('noticeNew', true)
+              changeIdentity.save()
+            }
             comments.push(commentcn)
             knowledgePot.set('comments', comments)
             knowledgePot.save()
@@ -54,12 +65,22 @@ router.post('/', (req, res)=> {
           res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'commentId' })
         })
       } else {
+        var other = kledge.get('user')
+          , otherTypes = other.get('types') || null
+          , identityId = otherTypes == 'teacher' ? other.get('teacher').id : 
+                     (otherTypes == 'student' ? other.get('student').id : '')
+          , changeIdentity = otherTypes == 'teacher' ? AV.Object.createWithoutData('Teacher', identityId) : 
+                     (otherTypes == 'student' ? AV.Object.createWithoutData('Student', identityId) : null)
         newcomment.set('own', userPot)
         newcomment.set('ownName', userName)
         newcomment.set('knowledge', knowledgePot)
         newcomment.set('retext', String(retext))
         newcomment.save().then((comment)=> {
           var commentcn = AV.Object.createWithoutData('Comment', comment.id)
+          if(changeIdentity) {
+            changeIdentity.set('noticeNew', true)
+            changeIdentity.save()
+          }
           comments.push(commentcn)
           knowledgePot.set('comments', comments)
           knowledgePot.save()

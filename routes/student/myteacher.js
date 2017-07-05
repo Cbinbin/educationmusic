@@ -57,7 +57,8 @@ router.get('/recommend', (req, res)=> {
       var onelat = one.get('lat') || 1
         , onelng = one.get('lng') || 1
       teachers.push({
-        distance: getDistance(lat, lng, onelat, onelng),
+        distanceNum: getDistance(lat, lng, onelat, onelng),
+        distance: getDistance(lat, lng, onelat, onelng) >= 1000 ? `${Math.round(getDistance(lat, lng, onelat, onelng)/10)/100} km` : `${getDistance(lat, lng, onelat, onelng)} m`,
         gender: one.get('gender') || 0,
         introduction: one.get('introduction') || null,
         realName: one.get('realName') || null,
@@ -68,7 +69,7 @@ router.get('/recommend', (req, res)=> {
       })
     })
     teachers.sort((a, b)=> {
-      return a.distance - b.distance
+      return a.distanceNum - b.distanceNum
     })
     res.send({code: msg.getok[0], errMsg: msg.getok[1], data: teachers })
   })

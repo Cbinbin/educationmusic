@@ -17,6 +17,7 @@ router.get('/', (req, res)=> {
         age: student.get('age') || 0,
         realName: student.get('realName') || null,
         img: student.get('img') || null,
+        noticeNew: student.get('noticeNew') || false,
         objectId: student.id,
         createdAt: student.createdAt
       },

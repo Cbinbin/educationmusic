@@ -87,6 +87,16 @@ class arrx {
     return array2
   }
 
+  pruneOneModleId(val, array) {
+    for(var i = 0; i < array.length; i++) {
+      if(array[i].modleId == val.modleId) {
+        array.splice(i, 1)
+        i = array.length
+      }
+    }
+    return array
+  }
+
   insertOne(val, array) {
     var array2 = array
       , exist = false
