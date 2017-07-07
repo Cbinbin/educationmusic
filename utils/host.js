@@ -1,3 +1,3 @@
 module.exports = {
-  domain: 'https://ccbinbin.leanapp.cn/'
+  domain: 'https://musiclessons.leanapp.cn/'
 }

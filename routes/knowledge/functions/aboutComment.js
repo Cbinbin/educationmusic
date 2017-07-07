@@ -56,7 +56,16 @@ function aboutComment(userId) {
         queryall.find().then((allcomment)=> {
           resolve(allcomment)
         })
-      } else resolve(ownledges)
+      } else {
+        var querymycomment = new AV.Query('Comment')
+          , queryothercomment = new AV.Query('Comment')
+        querymycomment.equalTo('own', userPot)
+        queryothercomment.equalTo('other', userPot)
+        var queryall = AV.Query.or(querymycomment, queryothercomment)
+        queryall.find().then((allcomment)=> {
+          resolve(allcomment)
+        })
+      }
     })
   })
   return returnComments

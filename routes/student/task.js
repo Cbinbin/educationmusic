@@ -18,19 +18,19 @@ router.post('/receive', (req, res)=> {
       var student = user.get('student') || null
         , teacher = task.get('teacher') || null
         , myStudent = teacher.get('myStudent')
-        , assignments = teacher.get('assignments')
+        , assignments = teacher.get('assignments') || []
       if(student) {
-        var myTeacher = student.get('myTeacher')
-          , tasks = student.get('tasks')
+        var myTeacher = student.get('myTeacher') || []
+          , tasks = student.get('tasks') || []
         var studentPot = AV.Object.createWithoutData('Student', student.id)
           , teacherPot = AV.Object.createWithoutData('Teacher', teacher.id)
         task.set('student', studentPot)
         task.save().then((taskone)=> {
           var taskPot = AV.Object.createWithoutData('Task', taskone.id)
-          arr.insertOnePot(teacherPot, myTeacher)
-          arr.insertOnePot(taskPot, tasks)
-          arr.insertOnePot(studentPot, myStudent)
-          arr.insertOnePot(taskPot, assignments)
+          myTeacher = arr.insertOnePot(teacherPot, myTeacher)
+          tasks = arr.insertOnePot(taskPot, tasks)
+          myStudent = arr.insertOnePot(studentPot, myStudent)
+          assignments = arr.insertOnePot(taskPot, assignments)
           studentPot.set('myTeacher', myTeacher)
           studentPot.set('tasks', tasks)
           teacherPot.set('myStudent', myStudent)

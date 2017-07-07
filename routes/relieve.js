@@ -4,6 +4,49 @@ const router = require('express').Router()
   , arrx = require('../utils/arrx')
   , arr = new arrx
 
+function clearKnowledge(userId) {
+  var queryknowledge = new AV.Query('Knowledge')
+    , userPot = AV.Object.createWithoutData('Usermusic', userId)
+  queryknowledge.equalTo('user', userPot)
+  queryknowledge.include('comments')
+  queryknowledge.find().then((allkldges)=> {
+    var commentObjArr = []
+    if(allkldges[0]) {
+      allkldges.forEach((kldge)=> {
+        var comments = kldge.get('comments') || []
+        comments = arr.clearNull(comments)
+        commentObjArr = commentObjArr.concat(comments)
+      })
+      if(commentObjArr[0]) {
+        AV.Object.destroyAll(commentObjArr).then(()=> {
+          console.log('delete all comment')
+        }, (err)=> {
+          console.log(err)
+        })
+      }
+      AV.Object.destroyAll(allkldges).then(()=> {
+        console.log('delete all knowledge')
+      }, (err)=> {
+        console.log(err)
+      })
+    } else {
+      var querymycomment = new AV.Query('Comment')
+      querymycomment.equalTo('own', userPot)
+      querymycomment.find().then((allcomments)=> {
+        if(allcomments[0]) {
+          AV.Object.destroyAll(allcomments).then(()=> {
+            console.log('delete all comment')
+          }, (err)=> {
+            console.log(err)
+          })
+        } else {
+          return
+        }
+      })
+    }
+  })
+}
+
 router.post('/', (req, res)=> {
   const userId = req.music.userId
     , relieve = req.body.relieve
@@ -46,6 +89,7 @@ router.post('/', (req, res)=> {
           user.set('types', 'undefined')
           user.set('teacher', null)
           user.save().then((updateuser)=> {
+            clearKnowledge(userId)
             res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'relieved success' })
           })
         })
@@ -83,6 +127,7 @@ router.post('/', (req, res)=> {
           user.set('types', 'undefined')
           user.set('student', null)
           user.save().then((updateuser)=> {
+            clearKnowledge(userId)
             res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'relieved success' })
           })
         })

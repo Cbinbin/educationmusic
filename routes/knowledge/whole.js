@@ -2,7 +2,9 @@ const router = require('express').Router()
   , AV = require('leanengine')
   , moment = require('moment')
   , msg = require('../../utils/msg')
+  , arrx = require('../../utils/arrx')
   , changeComment = require('./functions/changeComment')
+  , arr = new arrx
 
 router.get('/', (req, res)=> {
   var querykledge = new AV.Query('Knowledge')
@@ -22,7 +24,8 @@ router.get('/', (req, res)=> {
           , types = user.get('types') || null
           , identity = types == 'teacher' ? user.get('teacher') : 
           (types == 'student' ? user.get('student') : null)
-          , comments = oneledge.get('comments')
+          , comments = oneledge.get('comments') || []
+        comments = arr.clearNull(comments)
         knowledges.push({
           userId: user.id,
           identity: {

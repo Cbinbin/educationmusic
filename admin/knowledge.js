@@ -25,6 +25,7 @@ router.get('/list', (req, res)=> {
           , identity = types == 'teacher' ? user.get('teacher') : 
           (types == 'student' ? user.get('student') : null)
           , comments = oneledge.get('comments') || null
+        comments = arr.clearNull(comments)
         knowledges.push({
           userId: user.id,
           identity: {

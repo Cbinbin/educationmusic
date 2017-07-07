@@ -17,7 +17,8 @@ router.get('/', (req, res)=> {
       , types = user.get('types') || null
       , identity = types == 'teacher' ? user.get('teacher') : 
       (types == 'student' ? user.get('student') : null)
-      , comments = oneledge.get('comments')
+      , comments = oneledge.get('comments') || []
+    comments = arr.clearNull(comments)
     var knowledge = {
       userId: user.id,
       identity: {

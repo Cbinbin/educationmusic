@@ -22,7 +22,8 @@ router.get('/', (req, res)=> {
       (types == 'student' ? user.get('student') : null)
       , knowledges = []
     ownledges.forEach((oneledge)=> {
-      var comments = oneledge.get('comments')
+      var comments = oneledge.get('comments') || []
+      comments = arr.clearNull(comments)
       knowledges.push({
         userId: user.id,
         identity: {

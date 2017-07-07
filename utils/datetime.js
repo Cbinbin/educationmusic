@@ -65,7 +65,7 @@ class datetime {
       , year = Number(year)
       , month = Number(month)
       , weekArr = []
-    for(var i = month-1; i < month+2; i++) {
+    for(var i = month; i < month+3; i++) {
       var valmon = 0
         , valyear = 2017
       if(i > 12) {
@@ -102,7 +102,7 @@ class datetime {
     var keyArr = []
       , year = Number(year)
       , month = Number(month)
-    for(var i = month-1; i < month+2; i++) {
+    for(var i = month; i < month+3; i++) {
       var valmon = 0
         , valyear = 2017
       if(i > 12) {
