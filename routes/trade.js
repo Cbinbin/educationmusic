@@ -36,15 +36,22 @@ router.post('/one', (req, res)=> {
         integralChange(Number(0 - point), updateuser.id, `换购${title}`)
         var goodsPot = AV.Object.createWithoutData('Goods', goods.id)
           , userPot = AV.Object.createWithoutData('Usermusic', updateuser.id)
+          , querynandn = new AV.Query('Nandn')
           , newvoucher = new AV.Object('Voucher')
-        newvoucher.set('goods', goodsPot)
-        newvoucher.set('status', 'notrading')
-        newvoucher.set('name', '饭饭')
-        newvoucher.set('wxNum', '333334')
-        newvoucher.set('userId', updateuser.id)
-        newvoucher.set('user', userPot)
-        newvoucher.save().then((voucher)=> {
-          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucher })
+        querynandn.equalTo('admin', 'admin')
+        querynandn.descending('createdAt')
+        querynandn.find().then((nandns)=> {
+          var name = nandns[0].get('name') || ''
+            , wxNumber = nandns[0].get('wxNumber') || ''
+          newvoucher.set('goods', goodsPot)
+          newvoucher.set('status', 'notrading')
+          newvoucher.set('name', name)
+          newvoucher.set('wxNum', wxNumber)
+          newvoucher.set('userId', updateuser.id)
+          newvoucher.set('user', userPot)
+          newvoucher.save().then((voucher)=> {
+            res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucher })
+          })
         })
       })
     })

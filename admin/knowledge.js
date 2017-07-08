@@ -142,4 +142,26 @@ router.post('/qxtop', (req, res)=> {
   })
 })
 
+router.post('/comment/del', (req, res)=> {
+  const adminId = req.musicadmin.id
+  const commentId = req.body.commentId
+  var querycomment = new AV.Query('Comment')
+  querycomment.get(commentId).then((comment)=> {
+    var delcomment = AV.Object.createWithoutData('Comment', comment.id)
+      , queryaboutcomment = new AV.Query('Comment')
+    queryaboutcomment.equalTo('comment', delcomment)
+    queryaboutcomment.find().then((aboutcomments)=> {
+      aboutcomments.forEach((aboutcomment)=> {
+         var delaboutcomment = AV.Object.createWithoutData('Comment', aboutcomment.id)
+         delaboutcomment.destroy()
+      })
+      delcomment.destroy().then(()=> {
+        res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'deleted success' })
+      })
+    })
+  }, (err)=> {
+    res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'commentId' })
+  })
+})
+
 module.exports = router

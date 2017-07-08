@@ -17,27 +17,31 @@ router.post('/receive', (req, res)=> {
     querytask.get(taskId).then((task)=> {
       var student = user.get('student') || null
         , teacher = task.get('teacher') || null
-        , myStudent = teacher.get('myStudent')
-        , assignments = teacher.get('assignments') || []
+        , studentPot = AV.Object.createWithoutData('Student', student.id) || null
       if(student) {
-        var myTeacher = student.get('myTeacher') || []
-          , tasks = student.get('tasks') || []
-        var studentPot = AV.Object.createWithoutData('Student', student.id)
-          , teacherPot = AV.Object.createWithoutData('Teacher', teacher.id)
         task.set('student', studentPot)
         task.save().then((taskone)=> {
-          var taskPot = AV.Object.createWithoutData('Task', taskone.id)
+          var teacherPot = AV.Object.createWithoutData('Teacher', teacher.id) || null
+            , studentUpdate = AV.Object.createWithoutData('Student', student.id) || null
+            , taskPot = AV.Object.createWithoutData('Task', taskone.id)
+            , myTeacher = student.get('myTeacher') || []
+            , tasks = student.get('tasks') || []
           myTeacher = arr.insertOnePot(teacherPot, myTeacher)
           tasks = arr.insertOnePot(taskPot, tasks)
-          myStudent = arr.insertOnePot(studentPot, myStudent)
-          assignments = arr.insertOnePot(taskPot, assignments)
-          studentPot.set('myTeacher', myTeacher)
-          studentPot.set('tasks', tasks)
-          teacherPot.set('myStudent', myStudent)
-          teacherPot.set('assignments', assignments)
-          studentPot.save()
-          teacherPot.save()
-          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: taskone })
+          studentUpdate.set('myTeacher', myTeacher)
+          studentUpdate.set('tasks', tasks)
+          studentUpdate.save().then((changestudent)=> {
+            var teacherUpdate = AV.Object.createWithoutData('Teacher', teacher.id) || null
+              , myStudent = teacher.get('myStudent')
+              , assignments = teacher.get('assignments') || []
+            myStudent = arr.insertOnePot(studentPot, myStudent)
+            assignments = arr.insertOnePot(taskPot, assignments)
+            teacherUpdate.set('myStudent', myStudent)
+            teacherUpdate.set('assignments', assignments)
+            teacherUpdate.save().then((changeteacher)=> {
+              res.send({code: msg.postok[0], errMsg: msg.postok[1], data: taskone })
+            })
+          })
         })
       } else res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '你不是学生' })
     }, (err)=> {

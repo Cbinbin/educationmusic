@@ -74,12 +74,14 @@
   * [管理知识天地](#管理知识天地)
     * [获取所有知识天地](#获取所有知识天地)
     * [删除单个知识天地](#删除单个知识天地)
+    * [删除单个知识评论](#删除单个知识评论)
     * [单个置顶](#单个置顶)
     * [单个取消置顶](#单个取消置顶)
   * [交易记录](#交易记录)
     * [获取记录所有](#获取记录所有)
     * [更改记录状态](#更改记录状态)
     * [删除记录单个](#删除记录单个)
+    * [更改微信号名字](#更改微信号名字)
 
 
 
@@ -609,6 +611,16 @@
   kledgeId: ${kledgeId}
 }
 ```
+
+### 删除单个知识评论
+```js
+  POST    http://localhost:?/admin/knowledge/comment/del?token=${token}
+```
+```js
+{
+  commentId: ${commentId}
+}
+```
 ### 单个置顶
 ```js
   POST    http://localhost:?/admin/knowledge/top?token=${token}
@@ -643,6 +655,17 @@
 ```js
 {
   voucherId: ${voucherId}
+}
+```
+
+### 更改微信号名字
+```js
+  POST    http://localhost:?/admin/wx/change?token=${token}
+```
+```js
+{
+  name: ${name},
+  wxNumber: ${wxNumber}
 }
 ```
 
