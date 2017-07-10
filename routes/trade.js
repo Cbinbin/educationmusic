@@ -17,6 +17,8 @@ router.post('/one', (req, res)=> {
         , states = goods.get('states')
         , title = goods.get('title') || 'undefined'
         , category = goods.get('category')
+        , showContactway = goods.get('showContactway') || false
+        , contactway = goods.get('contactway') || null
       if(states != '上架') return res.send({code: msg.goodsOff[0], errMsg: msg.goodsOff[1], data: '商品已下架' })
       else if(integral < point) return res.send({code: msg.integralNE[0], errMsg: msg.integralNE[1], data: '积分不足' })
       if(category == 'modle') {
@@ -36,24 +38,25 @@ router.post('/one', (req, res)=> {
         integralChange(Number(0 - point), updateuser.id, `换购${title}`)
         var goodsPot = AV.Object.createWithoutData('Goods', goods.id)
           , userPot = AV.Object.createWithoutData('Usermusic', updateuser.id)
-          , querynandn = new AV.Query('Nandn')
+          // , querynandn = new AV.Query('Nandn')
           , newvoucher = new AV.Object('Voucher')
-        querynandn.equalTo('admin', 'admin')
-        querynandn.descending('createdAt')
-        querynandn.find().then((nandns)=> {
-          var name = nandns[0].get('name') || ''
-            , wxNumber = nandns[0].get('wxNumber') || ''
-          newvoucher.set('goods', goodsPot)
-          newvoucher.set('status', 'notrading')
-          newvoucher.set('name', name)
-          newvoucher.set('wxNum', wxNumber)
-          newvoucher.set('userId', updateuser.id)
-          newvoucher.set('user', userPot)
-          newvoucher.set('showContactway', false)
-          newvoucher.save().then((voucher)=> {
-            res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucher })
-          })
+        // querynandn.equalTo('admin', 'admin')
+        // querynandn.descending('createdAt')
+        // querynandn.find().then((nandns)=> {
+          // var name = nandns[0].get('name') || ''
+          //   , wxNumber = nandns[0].get('wxNumber') || ''
+        newvoucher.set('goods', goodsPot)
+        newvoucher.set('status', 'notrading')
+          // newvoucher.set('name', name)
+          // newvoucher.set('wxNum', wxNumber)
+        newvoucher.set('userId', updateuser.id)
+        newvoucher.set('user', userPot)
+        newvoucher.set('showContactway', showContactway)
+        newvoucher.set('contactway', contactway)
+        newvoucher.save().then((voucher)=> {
+          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucher })
         })
+        // })
       })
     })
   })
@@ -75,9 +78,10 @@ router.get('/vouchers', (req, res)=> {
           point: goods != null ? goods.get('point') : null
         },
         status: onev.get('status') || null,
-        name: onev.get('name') || null,
-        wxNum: onev.get('wxNum') || null,
+        // name: onev.get('name') || null,
+        // wxNum: onev.get('wxNum') || null,
         showContactway: onev.get('showContactway') || false,
+        contactway: voucher.get('contactway') || null,
         objectId: onev.id,
         createdAt: onev.createdAt
       })

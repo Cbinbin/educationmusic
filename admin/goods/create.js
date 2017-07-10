@@ -59,6 +59,7 @@ router.get('/images/empty', (req, res)=> {
 router.post('/', (req, res)=> {
   const adminId = req.musicadmin.id
     , defaultState = req.body.defaultState === true ? true : false
+    , showContactway = req.body.showContactway === true ? true : false
     , category = req.body.category
   if(category != 'goods' && category != 'modle') return res.send({code: msg.formatIncorr[0], errMsg: msg.formatIncorr[1], data: `category只能是'goods'或'modle'` })
   var queryimage = new AV.Query('Image')
@@ -78,6 +79,8 @@ router.post('/', (req, res)=> {
     goods.set('text', String(req.body.text))
     goods.set('states', state)
     goods.set('category', String(category))
+    goods.set('showContactway', showContactway)
+    goods.set('contactway', String(req.body.contactway))
     goods.save().then((newgoods)=> {
       if(category == 'modle') {
         var newmodle = new AV.Object('Modle')

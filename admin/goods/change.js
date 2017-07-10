@@ -5,6 +5,7 @@ const router = require('express').Router()
 router.post('/one', (req, res)=> {
   const goodsId = req.body.goodsId
     , delgoods = req.body.delgoods === true ? true : false
+    , showContactway = req.body.showContactway === true ? true : false
   var querygoods = new AV.Query('Goods')
   querygoods.get(goodsId).then((goods)=> {
     if(delgoods) {
@@ -16,7 +17,9 @@ router.post('/one', (req, res)=> {
       if(req.body.title) goods.set('title', String(req.body.title))
       if(req.body.point) goods.set('point', Number(req.body.point))
       if(req.body.text) goods.set('text', String(req.body.text))
+      if(req.body.contactway) goods.set('contactway', String(req.body.contactway))
       if(typeof req.body.state === 'boolean') goods.set('states', states)
+      if(typeof req.body.showContactway === 'boolean') goods.set('showContactway', showContactway)
       goods.save().then((updateone)=> {
         res.send({code: msg.postok[0], errMsg: msg.postok[1], data: updateone })
       })

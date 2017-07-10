@@ -33,6 +33,7 @@ router.get('/all', (req, res)=> {
         },
         status: voucher.get('status') || null,
         showContactway: voucher.get('showContactway') || false,
+        contactway: voucher.get('contactway') || null,
         objectId: voucher.id,
         createdAt: moment(voucher.createdAt).format('YYYY-MM-DD hh:mm:ss'),
         updatedAt: moment(voucher.updatedAt).format('YYYY-MM-DD hh:mm:ss')

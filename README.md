@@ -568,6 +568,8 @@
   point: ${point},    //积分(Number)
   text: ${text},    //商品详情(String)
   defaultState: ${defaultState},    //默认上下架['true'上架，'false'下架](Boolean)
+  showContactway: ${showContactway},    //显示联系方式(Boolean)
+  contactway: ${contactway},    //联系方式(String)
   category: ${category}    //商品类型['goods'物品，'modle'模版]
 }
 ```
@@ -591,6 +593,8 @@
   point: ${point},    //(Number)
   text: ${text},    //(String)
   state: ${state},    //(Boolean)
+  showContactway: ${showContactway},    //显示联系方式(Boolean)
+  contactway: ${contactway},    //联系方式(String)
   //delgoods: ${delgoods}    //删除(Boolean),和 goodsId 一起
 }
 ```
