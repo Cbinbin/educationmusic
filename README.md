@@ -647,6 +647,16 @@
 ```js
   GET    http://localhost:?/admin/trade/all?token=${token}
 ```
+### 更改记录状态
+```js
+  POST    http://localhost:?/admin/trade/status?token=${token}
+```
+```js
+{
+  voucherId: ${voucherId},    //(ObjectId)
+  showContactway: ${showContactway}    //(Boolean)
+}
+```
 
 ### 删除记录单个
 ```js
@@ -668,9 +678,4 @@
   wxNumber: ${wxNumber}
 }
 ```
-
-<!-- ### 更改记录状态
-```js
-  POST    http://localhost:?/admin/trade/status?token=${token}
-``` -->
 

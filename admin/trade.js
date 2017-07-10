@@ -32,6 +32,7 @@ router.get('/all', (req, res)=> {
           wxNum: voucher.get('wxNum') || null
         },
         status: voucher.get('status') || null,
+        showContactway: voucher.get('showContactway') || false,
         objectId: voucher.id,
         createdAt: moment(voucher.createdAt).format('YYYY-MM-DD hh:mm:ss'),
         updatedAt: moment(voucher.updatedAt).format('YYYY-MM-DD hh:mm:ss')
@@ -43,6 +44,17 @@ router.get('/all', (req, res)=> {
 
 router.post('/status', (req, res)=> {
   const adminId = req.musicadmin.id
+    , voucherId = req.body.voucherId
+    , showContactway = req.body.showContactway === true ? true : false
+  var queryvoucher = new AV.Query('Voucher')
+  queryvoucher.get(voucherId).then((voucherone)=> {
+    if(req.body.showContactway !== undefined) voucherone.set('showContactway', showContactway)
+    voucherone.save().then((voucherup)=> {
+      res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucherup })
+    })
+  }, (err)=> {
+    res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'voucherId' })
+  })
 })
 
 router.post('/del', (req, res)=> {

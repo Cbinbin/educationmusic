@@ -49,6 +49,7 @@ router.post('/one', (req, res)=> {
           newvoucher.set('wxNum', wxNumber)
           newvoucher.set('userId', updateuser.id)
           newvoucher.set('user', userPot)
+          newvoucher.set('showContactway', false)
           newvoucher.save().then((voucher)=> {
             res.send({code: msg.postok[0], errMsg: msg.postok[1], data: voucher })
           })
@@ -67,15 +68,16 @@ router.get('/vouchers', (req, res)=> {
   queryvoucher.find().then((vouchers)=> {
     var voucheres = []
     vouchers.forEach((onev)=> {
-      var goods = onev.get('goods')
+      var goods = onev.get('goods') || null
       voucheres.push({
         goods: {
-          title: goods.get('title') || null,
-          point: goods.get('point') || null
+          title: goods != null ? goods.get('title') : null,
+          point: goods != null ? goods.get('point') : null
         },
-        status: onev.get('status'),
-        name: onev.get('name'),
-        wxNum: onev.get('wxNum'),
+        status: onev.get('status') || null,
+        name: onev.get('name') || null,
+        wxNum: onev.get('wxNum') || null,
+        showContactway: onev.get('showContactway') || false,
         objectId: onev.id,
         createdAt: onev.createdAt
       })
