@@ -601,6 +601,7 @@
   state: ${state},    //(Boolean)
   showContactway: ${showContactway},    //显示联系方式(Boolean)
   contactway: ${contactway},    //联系方式(String)
+  category: ${category},    //(String)
   //delgoods: ${delgoods}    //删除(Boolean),和 goodsId 一起
 }
 ```
