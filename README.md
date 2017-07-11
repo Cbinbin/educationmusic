@@ -12,6 +12,7 @@
     * [更改教师信息](#更改教师信息)
     * [我的学生](#我的学生)
     * [上传二维码](#上传二维码)
+    * [删除二维码](#删除二维码)
     * [更改证书](#更改证书)
     * [更改教学风采](#更改教学风采)
     * [积分收入比例图数据](#积分收入比例图数据)
@@ -189,6 +190,11 @@
   // 上传二维码图片 key: 'music/rqcodes',覆盖原有
 }
 ```
+### 删除二维码
+```js
+  GET    http://localhost:?/music/teacher/change/rqcode/del?token=${token}
+```
+
 ### 更改证书
 ```js
   POST    http://localhost:?/music/teacher/change/cert?token=${token}

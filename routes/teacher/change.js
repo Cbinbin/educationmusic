@@ -81,6 +81,26 @@ router.post('/rqcode', (req, res)=> {
   })
 })
 
+router.get('/rqcode/del', (req, res)=> {
+  const userId = req.music.userId
+  var queryuser = new AV.Query('Usermusic')
+  queryuser.include('teacher')
+  queryuser.get(userId).then((userinfo)=> {
+    var teacherId = String(userinfo.get('teacher').id) || ''
+      , queryteacher = new AV.Query('Teacher')
+    queryteacher.get(teacherId).then((teacherone)=> {
+      var codeurl = teacherone.get('rqcode') || null
+      if(codeurl) qcos.deleteKey(codeurl).then()
+      teacherone.set('rqcode', null)
+      teacherone.save().then((iamteacher)=> {
+        res.send({code: msg.getok[0], errMsg: msg.getok[1], data: iamteacher })
+      })
+    }, (err)=> {
+      res.send({code: msg.nothing[0], errMsg: msg.nothing[1], data: 'teacherId' })
+    })
+  })
+})
+
 router.post('/cert', (req, res)=> {
   const userId = req.music.userId
   var queryuser = new AV.Query('Usermusic')
