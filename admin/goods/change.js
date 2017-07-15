@@ -7,7 +7,7 @@ router.post('/one', (req, res)=> {
     , delgoods = req.body.delgoods === true ? true : false
     , showContactway = req.body.showContactway === true ? true : false
     , category = req.body.category
-  if(category != 'goods' && category != 'modle') return res.send({code: msg.formatIncorr[0], errMsg: msg.formatIncorr[1], data: `category只能是'goods'或'modle'` })
+  if(!delgoods && category != 'goods' && category != 'modle') return res.send({code: msg.formatIncorr[0], errMsg: msg.formatIncorr[1], data: `category只能是'goods'或'modle'` })
   var querygoods = new AV.Query('Goods')
   querygoods.get(goodsId).then((goods)=> {
     if(delgoods) {

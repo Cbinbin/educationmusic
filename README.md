@@ -43,6 +43,7 @@
     * [获取单个沙龙](#获取单个沙龙)
     * [获取自己发布的沙龙](#获取自己发布的沙龙)
     * [获取已有的沙龙模版](#获取已有的沙龙模版)
+    * [删除单个沙龙](#删除单个沙龙)
   * [音乐作业](#音乐作业)
     * [老师布置作业](#老师布置作业)
     * [老师课时统计](#老师课时统计)
@@ -83,6 +84,9 @@
     * [更改记录状态](#更改记录状态)
     * [删除记录单个](#删除记录单个)
     * [更改微信号名字](#更改微信号名字)
+  * [后台沙龙](#后台沙龙)
+    * [后台获取全部沙龙](#后台获取全部沙龙)
+    * [后台删除单个沙龙](#后台删除单个沙龙)
 
 
 
@@ -398,6 +402,15 @@
 ```js
   GET    http://localhost:?/music/salon/modle?token=${token}
 ```
+### 删除单个沙龙
+```js
+  POST    http://localhost:?/music/salon/del?token=${token}
+```
+```js
+{
+  salonId: ${salonId}
+}
+```
 
 
 ## 音乐作业
@@ -687,6 +700,21 @@
 {
   name: ${name},
   wxNumber: ${wxNumber}
+}
+```
+
+## 后台沙龙
+### 后台获取全部沙龙
+```js
+  GET    http://localhost:?/admin/salon/all?token=${token}
+```
+### 后台删除单个沙龙
+```js
+  POST    http://localhost:?/admin/salon/del?token=${token}
+```
+```js
+{
+  salonId: ${salonId}
 }
 ```
 

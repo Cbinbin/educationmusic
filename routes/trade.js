@@ -28,7 +28,7 @@ router.post('/one', (req, res)=> {
           return res.send({code: msg.failed[0], errMsg: msg.failed[1], data: '请在过期后再购买' })
         var modleData = {
           modleId: modleId,
-          timestamp: Number(new Date().getTime() + (1*24*60*60*1000))
+          timestamp: Number(new Date().getTime() + (90*24*60*60*1000))
         }
         salonModles.push(modleData)
         user.set('salonModles', salonModles)
@@ -81,7 +81,7 @@ router.get('/vouchers', (req, res)=> {
         // name: onev.get('name') || null,
         // wxNum: onev.get('wxNum') || null,
         showContactway: onev.get('showContactway') || false,
-        contactway: voucher.get('contactway') || null,
+        contactway: onev.get('contactway') || null,
         objectId: onev.id,
         createdAt: onev.createdAt
       })
