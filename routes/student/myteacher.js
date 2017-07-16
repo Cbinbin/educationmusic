@@ -57,17 +57,21 @@ router.get('/recommend', (req, res)=> {
     allteacher.forEach((one)=> {
       var onelat = one.get('lat') || 1
         , onelng = one.get('lng') || 1
-      teachers.push({
-        distanceNum: getDistance(lat, lng, onelat, onelng),
-        distance: getDistance(lat, lng, onelat, onelng) >= 1000 ? `${Math.round(getDistance(lat, lng, onelat, onelng)/10)/100} km` : `${getDistance(lat, lng, onelat, onelng)} m`,
-        gender: one.get('gender') || 0,
-        introduction: one.get('introduction') || null,
-        realName: one.get('realName') || null,
-        img: one.get('img') || null,
-        instrument: one.get('instrument') || null,
-        objectId: one.id,
-        createdAt: one.createdAt
-      })
+        , introduction = one.get('introduction') || ''
+        , introductionLength = introduction.split('').length
+      if(introductionLength >= 20) {
+        teachers.push({
+          distanceNum: getDistance(lat, lng, onelat, onelng),
+          distance: getDistance(lat, lng, onelat, onelng) >= 1000 ? `${Math.round(getDistance(lat, lng, onelat, onelng)/10)/100} km` : `${getDistance(lat, lng, onelat, onelng)} m`,
+          gender: one.get('gender') || 0,
+          introduction: one.get('introduction') || null,
+          realName: one.get('realName') || null,
+          img: one.get('img') || null,
+          instrument: one.get('instrument') || null,
+          objectId: one.id,
+          createdAt: one.createdAt
+        })
+      }
     })
     teachers.sort((a, b)=> {
       return a.distanceNum - b.distanceNum

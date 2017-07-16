@@ -4,6 +4,8 @@ const router = require('express').Router()
   , msg = require('../../utils/msg')
   , changeComment = require('./functions/changeComment')
   , aboutComment = require('./functions/aboutComment')
+  , arrx = require('../../utils/arrx')
+  , arr = new arrx
 
 router.get('/', (req, res)=> {
   const userId = req.music.userId
@@ -16,13 +18,13 @@ router.get('/', (req, res)=> {
   querykledge.include('user.student')
   querykledge.descending('createdAt')
   querykledge.find().then((ownledges)=> {
-    var user = ownledges[0].get('user')
-      , types = user.get('types') || null
-      , identity = types == 'teacher' ? user.get('teacher') : 
-      (types == 'student' ? user.get('student') : null)
-      , knowledges = []
+    var knowledges = []
     ownledges.forEach((oneledge)=> {
-      var comments = oneledge.get('comments') || []
+      var user = oneledge.get('user')
+        , types = user.get('types') || null
+        , identity = types == 'teacher' ? user.get('teacher') : 
+        (types == 'student' ? user.get('student') : null)
+        , comments = oneledge.get('comments') || []
       comments = arr.clearNull(comments)
       knowledges.push({
         userId: user.id,
