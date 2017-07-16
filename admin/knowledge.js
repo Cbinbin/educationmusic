@@ -63,6 +63,7 @@ router.post('/del', (req, res)=> {
   querykledge.get(kledgeId).then((kledge)=> {
     var delkledge = AV.Object.createWithoutData('Knowledge', kledge.id)
       , querycomment = new AV.Query('Comment')
+      , top = kledge.get('top')
     querycomment.equalTo('knowledge', delkledge)
     querycomment.find().then((comments)=> {
       comments.forEach((commentone)=> {
@@ -70,6 +71,18 @@ router.post('/del', (req, res)=> {
          delcomment.destroy()
       })
     })
+    if(top) {
+      var querytop = new AV.Query('Top')
+      querytop.equalTo('adminId', 'admin')
+      querytop.find().then((tops)=> {
+        if(tops[0]) {
+          var klgtop = tops[0].get('klgtop') || []
+          klgtop = arr.pruneOne(kledge.id, klgtop)
+          tops[0].set('klgtop', klgtop)
+          tops[0].save()
+        }
+      })
+    }
     delkledge.destroy().then(()=> {
       res.send({code: msg.postok[0], errMsg: msg.postok[1], data: 'deleted success' })
     })
