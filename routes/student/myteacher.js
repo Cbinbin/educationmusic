@@ -50,33 +50,43 @@ router.get('/recommend', (req, res)=> {
   const userId = req.music.userId
     , lat = req.query.lat ? Number(req.query.lat) : 0
     , lng = req.query.lng ? Number(req.query.lng) : 0
-  var queryteacher = new AV.Query('Teacher')
+  var queryuser = new AV.Query('Usermusic')
+    , queryteacher = new AV.Query('Teacher')
   queryteacher.equalTo('show', true)
-  queryteacher.find().then((allteacher)=> {
-    var teachers = []
-    allteacher.forEach((one)=> {
-      var onelat = one.get('lat') || 1
-        , onelng = one.get('lng') || 1
-        , introduction = one.get('introduction') || ''
-        , introductionLength = introduction.split('').length
-      if(introductionLength >= 20) {
-        teachers.push({
-          distanceNum: getDistance(lat, lng, onelat, onelng),
-          distance: getDistance(lat, lng, onelat, onelng) >= 1000 ? `${Math.round(getDistance(lat, lng, onelat, onelng)/10)/100} km` : `${getDistance(lat, lng, onelat, onelng)} m`,
-          gender: one.get('gender') || 0,
-          introduction: one.get('introduction') || null,
-          realName: one.get('realName') || null,
-          img: one.get('img') || null,
-          instrument: one.get('instrument') || null,
-          objectId: one.id,
-          createdAt: one.createdAt
-        })
-      }
+  queryteacher.include('userId')
+  queryuser.get(userId).then((iamstudent)=> {
+    queryteacher.find().then((allteacher)=> {
+      var myCity = iamstudent.get('city') || null
+        , teachers = []
+      allteacher.forEach((one)=> {
+        var onelat = one.get('lat') || 1
+          , onelng = one.get('lng') || 1
+          , user = one.get('userId') || null
+          , oneCity = user != null ? user.get('city') : null
+          , introduction = one.get('introduction') || ''
+          , introductionLength = introduction.split('').length
+        if(introductionLength >= 20) {
+          if(oneCity && myCity == oneCity && getDistance(lat, lng, onelat, onelng) <= 30*1000) {
+            teachers.push({
+              distanceNum: getDistance(lat, lng, onelat, onelng),
+              distance: getDistance(lat, lng, onelat, onelng) >= 1000 ? `${Math.round(getDistance(lat, lng, onelat, onelng)/10)/100} km` : `${getDistance(lat, lng, onelat, onelng)} m`,
+              gender: one.get('gender') || 0,
+              introduction: one.get('introduction') || null,
+              realName: one.get('realName') || null,
+              img: one.get('img') || null,
+              instrument: one.get('instrument') || null,
+              objectId: one.id,
+              createdAt: one.createdAt,
+              user: user
+            })
+          }
+        }
+      })
+      teachers.sort((a, b)=> {
+        return a.distanceNum - b.distanceNum
+      })
+      res.send({code: msg.getok[0], errMsg: msg.getok[1], data: teachers })
     })
-    teachers.sort((a, b)=> {
-      return a.distanceNum - b.distanceNum
-    })
-    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: teachers })
   })
 })
 
@@ -86,27 +96,29 @@ router.post('/recommend/search', (req, res)=> {
   queryteacher.find().then((allteacher)=> {
     var searchword = search != undefined ? search.split('') : []
       , allword = []
-    allteacher.forEach((one)=> {
-      var instrument = one.get('instrument').split('')
-      allword.push(instrument[0])
-    })
-    if(arr.inTo(allword, searchword[0])) {
-      //按乐器查找
-      var queryinstru = new AV.Query('Teacher')
-        , regExpi = new RegExp(`^${search}`, 'i')
-      queryinstru.matches('instrument', regExpi)
-      queryinstru.find().then((teachers)=> {
-        res.send({code: msg.postok[0], errMsg: msg.postok[1], data: teachers })
+    if(search) {
+      allteacher.forEach((one)=> {
+        var instrument = one.get('instrument').split('')
+        allword.push(instrument[0])
       })
-    } else {
-      //按名字查找
-      var queryname = new AV.Query('Teacher')
-        , regExpr = new RegExp(`^${search}`, 'i')
-      queryname.matches('realName', regExpr)
-      queryname.find().then((teachers)=> {
-        res.send({code: msg.postok[0], errMsg: msg.postok[1], data: teachers })
-      })
-    }
+      if(arr.inTo(allword, searchword[0])) {
+        //按乐器查找
+        var queryinstru = new AV.Query('Teacher')
+          , regExpi = new RegExp(`^${search}`, 'i')
+        queryinstru.matches('instrument', regExpi)
+        queryinstru.find().then((teachers)=> {
+          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: teachers })
+        })
+      } else {
+        //按名字查找
+        var queryname = new AV.Query('Teacher')
+          , regExpr = new RegExp(`^${search}`, 'i')
+        queryname.matches('realName', regExpr)
+        queryname.find().then((teachers)=> {
+          res.send({code: msg.postok[0], errMsg: msg.postok[1], data: teachers })
+        })
+      }
+    } else res.send({code: msg.postok[0], errMsg: msg.postok[1], data: [] })
   })
 })
 
