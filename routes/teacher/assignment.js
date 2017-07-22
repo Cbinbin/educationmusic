@@ -69,6 +69,32 @@ router.get('/all', (req, res)=> {
   })
 })
 
+router.get('/one', (req, res)=> {
+  const userId = req.music.userId
+    , taskid = req.query.taskid
+  var queryassign = new AV.Query('Task')
+  queryassign.get(taskid).then((assign)=> {
+    var assignre = {
+      name: assign.get('name') || null,
+      age: assign.get('age') || null,
+      gender: assign.get('gender') || 0,
+      teacherName: assign.get('teacherName') || null,
+      teacherImg: assign.get('teacherImg') || null,
+      classtime: assign.get('classtime') || null,
+      proficiency: assign.get('proficiency') || 0,
+      readMusic: assign.get('readMusic') || 0,
+      rhythmSensation: assign.get('rhythmSensation') || 0,
+      expressiveForce: assign.get('expressiveForce') || 0,
+      keynote: assign.get('keynote') || null,
+      schedules: assign.get('schedules') || [],
+      objectId: assign.id,
+      createdAt: assign.createdAt,
+      updatedAt: assign.updatedAt,
+    }
+    res.send({code: msg.getok[0], errMsg: msg.getok[1], data: assignre })
+  })
+})
+
 router.get('/linechart', (req, res)=> {
   const userId = req.music.userId
     , nowdate = dt.splitDate(new Date())

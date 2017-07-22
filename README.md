@@ -47,6 +47,7 @@
   * [音乐作业](#音乐作业)
     * [老师布置作业](#老师布置作业)
     * [老师课时统计](#老师课时统计)
+    * [老师单个课时详情](#老师单个课时详情)
     * [老师折线图数据](#老师折线图数据)
     * [学生接收作业](#学生接收作业)
     * [学生更改练习进度](#学生更改练习进度)
@@ -435,6 +436,10 @@
 ### 老师课时统计
 ```js
   GET    http://localhost:?/music/teacher/assignment/all?token=${token}
+```
+### 老师单个课时详情
+```js
+  GET    http://localhost:?/music/teacher/assignment/one?token=${token}&taskid=${taskid}
 ```
 ### 老师折线图数据
 ```js
