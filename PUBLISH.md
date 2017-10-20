@@ -1,6 +1,6 @@
 # educationmusic
 
-``js
+```js
   git clone https://github.com/Cbinbin/educationmusic.git    
   cd educationmusic    
   npm install    
